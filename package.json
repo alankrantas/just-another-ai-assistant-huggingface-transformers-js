@@ -1,0 +1,29 @@
+{
+    "name": "just-another-ai-assistant",
+    "license": "MIT",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --port 3000 --open --host",
+        "start": "yarn dev",
+        "build": "vite build",
+        "preview": "vite preview --port 8080 --open --host",
+        "serve": "yarn preview",
+        "pull": "git pull origin main",
+        "push": "git add . && git commit -m \"User updating\" && git push origin main",
+        "commit": "yarn pull && yarn push"
+    },
+    "dependencies": {
+        "@huggingface/transformers": "^3.4.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        "@vitejs/plugin-react": "^4.3.4",
+        "globals": "^15.15.0",
+        "typescript": "~5.7.2",
+        "vite": "^6.2.0"
+    }
+}
