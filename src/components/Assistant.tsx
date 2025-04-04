@@ -102,7 +102,7 @@ const Assistant: FunctionComponent = () => {
     return (
         <>
             <h1>Just Another AI Assistant</h1>
-            <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformer' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
+            <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
             <h3><code>Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target='_blank' rel='noreferrer noopener'>{LLMConfig.model}</a></code></h3>
 
             <div className='container'>
