@@ -1,4 +1,4 @@
-# Just Another AI Assistant - HuggingFace Transformer.js Demo
+# Just Another AI Assistant - a HuggingFace Transformer.js Demo
 
 > Try it [here](https://alankrantas.github.io/just-another-ai-assistant-huggingface-transformer/).
 
@@ -6,9 +6,9 @@ A simple demonstration modified from HuggingFace's [React-translator](https://gi
 
 The demo utilizes [`Transformer.js`](https://huggingface.co/docs/transformers.js/index) to load and run a (smaller) LLM (large language model) in the web browser. It uses `Vite`'s `Worker` to run the model in the background, hence this would have to be a React or Svelte app.
 
-## HuggingFace Model
+## Large Language Model
 
-Among [models](https://llm.extractum.io/list/?4GB) require less than 4GB VRAM, There are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) supported by `Transformer.js`, and even fewer can be loaded and run properly. Due to some issue of `Vite`, it's even harder to load and run models locally.
+Among [models](https://llm.extractum.io/list/?4GB) require less than 4GB VRAM, There are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) supported by `Transformer.js`, and even fewer can be loaded and run properly. Due to some bundling issue of `Vite`, it's actually harder to load and run models locally.
 
 The ones I've successfully tested includes:
 
@@ -20,7 +20,11 @@ Right now I use `onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`. I know it's a C
 
 I add options to apply different roles and tasks as part of the prompts, although it doesn't seem to have significant effects on these smaller models.
 
+### Choose Model and Modify Prompt
+
 You can define the model and additional prompts in `src/llm/LLMConfig.json`.
+
+The role prompt will be used as the system role (third person), and the task prompt will be added before your prompt (first person).
 
 ## Development
 

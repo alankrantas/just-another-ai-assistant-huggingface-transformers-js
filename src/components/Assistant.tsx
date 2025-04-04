@@ -102,8 +102,8 @@ const Assistant: FunctionComponent = () => {
     return (
         <>
             <h1>Just Another AI Assistant</h1>
-            <h2>HuggingFace Transformers.js Demo</h2>
-            <h3><code>Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target="_blank" rel="noreferrer noopener">{LLMConfig.model}</a></code></h3>
+            <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformer' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
+            <h3><code>Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target='_blank' rel='noreferrer noopener'>{LLMConfig.model}</a></code></h3>
 
             <div className='container'>
                 <div className='selector-container'>
@@ -111,8 +111,8 @@ const Assistant: FunctionComponent = () => {
                     <Selector disabled={disabled} type={'Task'} items={LLMConfig.tasks} defaultItem={LLMConfig.tasks['Generate Content']} onChange={e => setInput({ ...input, task: e.target.value })} />
                 </div>
                 <div className='textbox-container'>
-                    <textarea value={input.text} disabled={disabled} onChange={e => setInput({ ...input, text: e.target.value })} spellCheck="true" wrap="hard"></textarea>
-                    <textarea value={output} readOnly ref={textArea} wrap="soft"></textarea>
+                    <textarea value={input.text} disabled={disabled} onChange={e => setInput({ ...input, text: e.target.value })} spellCheck='true' wrap='hard'></textarea>
+                    <textarea value={output} readOnly ref={textArea} wrap='soft'></textarea>
                 </div>
             </div>
 
