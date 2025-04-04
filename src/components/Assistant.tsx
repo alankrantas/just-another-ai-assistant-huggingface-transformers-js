@@ -117,15 +117,15 @@ const Assistant: FunctionComponent = () => {
             </div>
 
             <button disabled={disabled} onClick={generate}>
-                {disabled ? (ready ? 'Generating...' : 'Loading and generating...') : 'Generate'}
+                {disabled ? (ready ? 'Generating...' : 'Loading...') : 'Generate'}
             </button>
 
             <div className='progress-bars-container'>
                 {ready === false && (
                     <h5>
-                        May not work properly on mobile devices!
-                        <br />
                         The model has be downloaded for the first time and run in the browser.
+                        <br />
+                        It not load properly on mobile devices!
                     </h5>
                 )}
                 {progressItems.map(data => (

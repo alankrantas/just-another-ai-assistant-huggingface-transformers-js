@@ -43,12 +43,15 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         },
         {
             role: 'user',
-            content: `${e.data.task}\nThe content is as follows: <start>\n${e.data.text}\n<end>\n`,
+            content: `${e.data.task}\nThe input content is as follows:\n<start>\n\n${e.data.text}\n\n<end>\n`,
         },
     ];
 
     const output = await generator(messages, {
-        max_new_tokens: 1024 * 8,
+        max_new_tokens: LLMConfig.config.max_new_tokens,
+        temperature: LLMConfig.config.temperature,
+        top_p: LLMConfig.config.top_p,
+        repetition_penalty: LLMConfig.config.repetition_penalty,
         streamer,
     });
 
