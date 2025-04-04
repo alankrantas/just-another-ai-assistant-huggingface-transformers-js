@@ -30,7 +30,7 @@ const Assistant: FunctionComponent = () => {
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
     const [input, setInput] = useState<Input>({
-        text: 'Tell me a story.',
+        text: 'Tell me some interesting facts about programmers.',
         role: LLMConfig.roles['Professional Assistant'],
         task: LLMConfig.tasks['Generate Content'],
     });
@@ -130,7 +130,7 @@ const Assistant: FunctionComponent = () => {
                 )}
                 {progressItems.map(data => (
                     <div key={data?.file}>
-                        <Progress text={`${data?.file} - ${data?.name}`} percentage={data?.progress} />
+                        <Progress text={data?.file} percentage={data?.progress} />
                     </div>
                 ))}
             </div>
