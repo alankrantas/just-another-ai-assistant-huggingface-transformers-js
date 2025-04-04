@@ -1,6 +1,6 @@
 # Just Another AI Assistant - a HuggingFace Transformer.js Demo
 
-> Try it [here](https://alankrantas.github.io/just-another-ai-assistant-huggingface-transformer/).
+> Try it [here](https://alankrantas.github.io/just-another-ai-assistant-huggingface-transformers-js/).
 
 A simple demonstration modified from HuggingFace's [React-translator](https://github.com/huggingface/transformers.js/tree/main/examples/react-translator) example with TypeScript support.
 
