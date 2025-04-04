@@ -125,7 +125,7 @@ const Assistant: FunctionComponent = () => {
                     <h5>
                         The model has be downloaded for the first time and run in the browser.
                         <br />
-                        It not load properly on mobile devices!
+                        It may not load properly on mobile devices!
                     </h5>
                 )}
                 {progressItems.map(data => (
