@@ -2,8 +2,8 @@
     "model": "onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA",
     "config": {
         "max_new_tokens": 4096,
-        "temperature": 0.8,
-        "top_p": 1.0,
+        "temperature": 0.7,
+        "top_p": 0.9,
         "repetition_penalty": 1.1
     },
     "system-task": "text-generation",
