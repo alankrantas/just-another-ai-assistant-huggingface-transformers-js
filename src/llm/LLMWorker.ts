@@ -43,7 +43,11 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         },
         {
             role: 'user',
-            content: `${e.data.task}\nThe input content is as follows:\n<start>\n\n${e.data.text}\n\n<end>\n`,
+            content: e.data.task,
+        },
+        {
+            role: 'user',
+            content: `\`\`\`\n${e.data.text}\n\`\`\`\n`,
         },
     ];
 
