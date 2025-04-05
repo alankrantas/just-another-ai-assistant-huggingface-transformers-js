@@ -10,7 +10,7 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 ---
 
-## Large Language Model
+## "Small" Large Language Model
 
 Among [models](https://llm.extractum.io/list/?4GB) require less than 4 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
