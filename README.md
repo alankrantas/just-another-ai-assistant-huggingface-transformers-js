@@ -12,15 +12,13 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 ## "Small" Large Language Model
 
-Among [models](https://llm.extractum.io/list/?4GB) require less than 4 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
+Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
 The ones I've successfully tested includes:
 
-- `Phi-3-mini-4k-instruct` and `Phi-3.5-mini-instruct` (extremely slow)
-- `TinyLlama-1.1B-Chat-v1.0` (poor output)
-- `Qwen2.5-0.5B-Instruct` and `Qwen2.5-1.5B-Instruct`
-
-Sadly, `SmolLM2-1.7B-Instruct` and `gemma-3-1b-it` can be loaded but throw errors during execution.
+- `Phi-3-mini-4k-instruct` and `Phi-3.5-mini-instruct` (~7.7 VRAM; extremely slow)
+- `TinyLlama-1.1B-Chat-v1.0` (2.2 VRAM; poor output)
+- `Qwen2.5-0.5B-Instruct` (1 VRAM) and `Qwen2.5-1.5B-Instruct` (3.1 VRAM)
 
 For now I am using `onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`. Hopefully we will have some other small but powerful models available.
 
