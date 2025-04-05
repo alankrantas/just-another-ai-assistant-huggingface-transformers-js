@@ -30,7 +30,7 @@ const Assistant: FunctionComponent = () => {
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
     const [input, setInput] = useState<Input>({
-        text: 'Tell me some interesting historical facts about programmers.',
+        text: 'What is the meaning of life, the universe and everything else?',
         role: LLMConfig.roles['Professional Assistant'],
         task: LLMConfig.tasks['Generate Content'],
     });
