@@ -18,9 +18,10 @@ The ones I've successfully tested includes:
 
 - `Phi-3-mini-4k-instruct` and `Phi-3.5-mini-instruct` (~7.7 VRAM; extremely slow)
 - `TinyLlama-1.1B-Chat-v1.0` (2.2 VRAM; poor output)
-- `Qwen2.5-0.5B-Instruct` (1 VRAM) and `Qwen2.5-1.5B-Instruct` (3.1 VRAM)
+- `Qwen2.5-0.5B-Instruct` (1 VRAM)
+- `Qwen2.5-1.5B-Instruct` (3.1 VRAM; slightly slower than 0.5B)
 
-For now I am using `onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`. Hopefully we will have some other small but powerful models available.
+For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA). Hopefully we will have some other small but powerful models available.
 
 ### Choose Model and Configure
 
