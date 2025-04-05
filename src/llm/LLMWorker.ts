@@ -56,7 +56,7 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         temperature: LLMConfig.config.temperature,
         top_p: LLMConfig.config.top_p,
         repetition_penalty: LLMConfig.config.repetition_penalty,
-        do_sample: false,
+        do_sample: true,
         streamer,
     });
 
