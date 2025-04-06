@@ -27,7 +27,7 @@ const Assistant: FunctionComponent = () => {
     const worker = useRef<Worker | null>(null);
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
-    const [input, setInput] = useState('What is the meaning of life, the universe and everything? Unusual answer only please.');
+    const [input, setInput] = useState('What is the answer to the meaning of life, the universe and everything?');
     const [output, setOutput] = useState('');
     const [ready, setReady] = useState(false);
     const [disabled, setDisabled] = useState(false);
