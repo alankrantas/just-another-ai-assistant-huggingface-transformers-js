@@ -1,7 +1,6 @@
 import { env, pipeline, TextStreamer } from '@huggingface/transformers';
 import type { PipelineType, TextGenerationPipeline, ProgressCallback } from '@huggingface/transformers';
 
-import type { Input } from '../components/Types';
 import LLMConfig from './LLMConfig.json';
 
 class LLMWorker {
@@ -12,7 +11,7 @@ class LLMWorker {
         env.allowLocalModels = false;
         env.useBrowserCache = false;
 
-        this.instance ??= pipeline<PipelineType>(LLMConfig['system-task'] as PipelineType, LLMConfig.model, {
+        this.instance ??= pipeline<PipelineType>(LLMConfig['task'] as PipelineType, LLMConfig.model, {
             progress_callback,
         }) as Promise<TextGenerationPipeline>;
 
@@ -20,7 +19,7 @@ class LLMWorker {
     }
 }
 
-self.addEventListener('message', async (e: MessageEvent<Input>) => {
+self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => {
     const generator = await LLMWorker.getInstance((x) => {
         self.postMessage(x);
     });
@@ -39,15 +38,11 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
     const messages = [
         {
             role: 'system',
-            content: `${e.data.role}\n${LLMConfig['system-prompt']}\n`,
+            content: LLMConfig['system_role'],
         },
         {
             role: 'user',
-            content: e.data.task,
-        },
-        {
-            role: 'user',
-            content: `\`\`\`\n${e.data.text}\n\`\`\`\n`,
+            content: e.data?.prompt || '',
         },
     ];
 

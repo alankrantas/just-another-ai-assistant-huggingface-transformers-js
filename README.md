@@ -25,9 +25,7 @@ For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://hug
 
 ### Choose Model and Configure
 
-You can define the model and additional configuration in `/src/llm/LLMConfig.json`.
-
-The role prompt will be used as the system role (in third person), and the task prompt will be added before your prompt (in first person). Although these doesn't seem to have significant effects on these smaller language models.
+You can define the model, configuration parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role in `/src/llm/LLMConfig.json`.
 
 ---
 

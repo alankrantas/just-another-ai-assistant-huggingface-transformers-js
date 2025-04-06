@@ -6,8 +6,6 @@ import {
 } from 'react';
 
 import './Assistant.css';
-import type { Input } from './Types';
-import Selector from './Selector';
 import Progress from './Progress';
 import LLMWorker from '../llm/LLMWorker?worker';
 import LLMConfig from '../llm/LLMConfig.json';
@@ -29,11 +27,7 @@ const Assistant: FunctionComponent = () => {
     const worker = useRef<Worker | null>(null);
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
-    const [input, setInput] = useState<Input>({
-        text: 'What is the meaning of life, the universe and everything else?',
-        role: LLMConfig.roles['Professional Assistant'],
-        task: LLMConfig.tasks['Generate Content'],
-    });
+    const [input, setInput] = useState('What is the meaning of life, the universe and everything? Unusual answer only please.');
     const [output, setOutput] = useState('');
     const [ready, setReady] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -42,9 +36,7 @@ const Assistant: FunctionComponent = () => {
     const generate = () => {
         setDisabled(true);
         setOutput('');
-        worker?.current?.postMessage({
-            ...input,
-        });
+        worker?.current?.postMessage({ prompt: input });
     }
 
     useEffect(() => {
@@ -103,15 +95,17 @@ const Assistant: FunctionComponent = () => {
         <>
             <h1>Just Another AI Assistant</h1>
             <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
-            <h3><code>Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target='_blank' rel='noreferrer noopener'>{LLMConfig.model}</a></code></h3>
+            <h3>
+                <code>
+                    Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target='_blank' rel='noreferrer noopener'>{LLMConfig.model}</a>
+                    <br />
+                    Task: {LLMConfig.task}
+                </code>
+            </h3>
 
             <div className='container'>
-                <div className='selector-container'>
-                    <Selector disabled={disabled} type={'Role'} items={LLMConfig.roles} defaultItem={LLMConfig.roles['Professional Assistant']} onChange={e => setInput({ ...input, role: e.target.value })} />
-                    <Selector disabled={disabled} type={'Task'} items={LLMConfig.tasks} defaultItem={LLMConfig.tasks['Generate Content']} onChange={e => setInput({ ...input, task: e.target.value })} />
-                </div>
                 <div className='textbox-container'>
-                    <textarea value={input.text} disabled={disabled} onChange={e => setInput({ ...input, text: e.target.value })} spellCheck='true' wrap='hard'></textarea>
+                    <textarea value={input} disabled={disabled} onChange={e => setInput(e.target.value)} spellCheck='true' wrap='hard'></textarea>
                     <textarea value={output} readOnly ref={textArea} wrap='soft'></textarea>
                 </div>
             </div>

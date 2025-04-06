@@ -5,11 +5,6 @@
     text-align: center;
 }
 
-.selector-container {
-    display: flex;
-    gap: 20px;
-}
-
 .textbox-container {
     display: flex;
     justify-content: center;
@@ -18,14 +13,9 @@
     height: 50vh;
 }
 
-.textbox-container>textarea,
-.selector {
+.textbox-container>textarea {
     width: 50%;
     line-height: 1.6;
-}
-
-.selector>select {
-    width: 250px;
 }
 
 .progress-container {
