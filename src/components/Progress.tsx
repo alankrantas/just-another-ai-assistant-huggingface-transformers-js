@@ -12,7 +12,7 @@ const Progress: FunctionComponent<ProgressProps> = ({ text = '', percentage = 0 
     return (
         <div className="progress-container">
             <div className='progress-bar' style={{ 'width': `${percentage}%` }}>
-                (<b>{`${percentage.toFixed(2)}%`}</b>) {text}
+                ({`${percentage.toFixed(2)}%`}) {text}
             </div>
         </div>
     );

@@ -32,6 +32,7 @@ const Assistant: FunctionComponent = () => {
     const [ready, setReady] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [progressItems, setProgressItems] = useState<Data[]>([]);
+    const [statusText, setStatusText] = useState('Run a small language model locally on browser (need to be downloaded once)');
 
     const generate = () => {
         setDisabled(true);
@@ -49,6 +50,7 @@ const Assistant: FunctionComponent = () => {
                 case 'initiate':
                     setReady(false);
                     setProgressItems(prev => [...prev, e.data]);
+                    setStatusText('Downloading model...');
                     break;
 
                 case 'progress':
@@ -70,6 +72,7 @@ const Assistant: FunctionComponent = () => {
 
                 case 'ready':
                     setReady(true);
+                    setStatusText('Model downloaded. Awaiting response...');
                     break;
 
                 case 'update':
@@ -78,10 +81,21 @@ const Assistant: FunctionComponent = () => {
                         const area = textArea.current;
                         if (area) area.scrollTop = area.scrollHeight;
                     }
+                    setStatusText('Model running...');
                     break;
 
                 case 'complete':
+                    if (e.data?.output) console.log(e.data.output);
+                    setProgressItems([]);
                     setDisabled(false);
+                    setStatusText('Model task completed');
+                    break;
+
+                case 'error':
+                    setProgressItems([]);
+                    setDisabled(false);
+                    setStatusText(`${ready ? 'Model error' : 'Loading error'}`);
+                    setOutput(e.data?.output || 'Unknown error');
                     break;
             }
         };
@@ -111,17 +125,11 @@ const Assistant: FunctionComponent = () => {
             </div>
 
             <button disabled={disabled} onClick={generate}>
-                {ready ? (disabled ? 'Generating...' : 'Generate') : (disabled ? 'Downloading...' : 'Download and Generate')}
+                {disabled ? 'Generating...' : 'Generate'}
             </button>
 
             <div className='progress-bars-container'>
-                {ready === false && (
-                    <h5>
-                        The model run <i>only</i> in your browser and has to be downloaded once.
-                        <br />
-                        It may not run properly on your device with insufficient RAM!
-                    </h5>
-                )}
+                {statusText}
                 {progressItems.map(data => (
                     <div key={data?.file}>
                         <Progress text={data?.file} percentage={data?.progress} />

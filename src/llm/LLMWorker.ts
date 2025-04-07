@@ -11,52 +11,66 @@ class LLMWorker {
         env.allowLocalModels = false;
         env.useBrowserCache = false;
 
-        this.instance ??= pipeline<PipelineType>(LLMConfig['task'] as PipelineType, LLMConfig.model, {
-            progress_callback,
-        }) as Promise<TextGenerationPipeline>;
+        this.instance ??= pipeline<PipelineType>(
+            LLMConfig['task'] as PipelineType,
+            LLMConfig.model,
+            {
+                progress_callback,
+            }
+        ) as Promise<TextGenerationPipeline>;
 
         return this.instance;
     }
 }
 
 self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => {
-    const generator = await LLMWorker.getInstance((x) => {
-        self.postMessage(x);
-    });
+    try {
+        const generator = await LLMWorker.getInstance((x) => {
+            self.postMessage(x);
+        });
+    
+        const streamer = new TextStreamer(generator.tokenizer, {
+            skip_prompt: true,
+            skip_special_tokens: true,
+            callback_function: (text) => {
+                self.postMessage({
+                    status: 'update',
+                    output: text,
+                });
+            },
+        });
+    
+        const messages = LLMConfig['chat_template'] ? [
+            {
+                role: 'system',
+                content: LLMConfig['system_role'],
+            },
+            {
+                role: 'user',
+                content: e.data?.prompt || '',
+            },
+        ] : e.data?.prompt || '';
+    
+        await generator(messages, {
+            max_new_tokens: LLMConfig.config.max_new_tokens,
+            temperature: LLMConfig.config.temperature,
+            top_p: LLMConfig.config.top_p,
+            repetition_penalty: LLMConfig.config.repetition_penalty,
+            do_sample: LLMConfig.config.do_sample,
+            return_full_text: false,
+            streamer,
+        });
 
-    const streamer = new TextStreamer(generator.tokenizer, {
-        skip_prompt: true,
-        skip_special_tokens: true,
-        callback_function: (text) => {
-            self.postMessage({
-                status: 'update',
-                output: text,
-            });
-        },
-    });
+        self.postMessage({
+            status: 'complete',
+        });
 
-    const messages = [
-        {
-            role: 'system',
-            content: LLMConfig['system_role'],
-        },
-        {
-            role: 'user',
-            content: e.data?.prompt || '',
-        },
-    ];
+    } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
+        self.postMessage({
+            status: 'error',
+            output: message,
+        });
 
-    const output = await generator(messages, {
-        max_new_tokens: LLMConfig.config.max_new_tokens,
-        temperature: LLMConfig.config.temperature,
-        top_p: LLMConfig.config.top_p,
-        repetition_penalty: LLMConfig.config.repetition_penalty,
-        do_sample: LLMConfig.config.do_sample,
-        streamer,
-    });
-
-    self.postMessage({
-        status: 'complete',
-        output,
-    });
+    }
 });
