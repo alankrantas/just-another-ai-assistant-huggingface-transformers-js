@@ -52,7 +52,7 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
         ] : e.data?.prompt || '';
     
         await generator(messages, {
-            ...Config,
+            ...Config.config,
             return_full_text: false,
             streamer,
         });
