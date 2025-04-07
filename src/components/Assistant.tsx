@@ -10,16 +10,12 @@ import Progress from './Progress';
 import LLMWorker from '../llm/LLMWorker?worker';
 import LLMConfig from '../llm/LLMConfig.json';
 
-export interface Data {
+interface Data {
     status: string;
     name?: string;
     file?: string;
     progress?: number;
     output?: string;
-}
-
-export interface Message {
-    data: Data;
 }
 
 const Assistant: FunctionComponent = () => {
@@ -36,7 +32,7 @@ const Assistant: FunctionComponent = () => {
 
     const generate = () => {
         setDisabled(true);
-        etStatusText('');
+        setStatusText('');
         setOutput('');
         worker?.current?.postMessage({ prompt: input });
     }
@@ -44,7 +40,7 @@ const Assistant: FunctionComponent = () => {
     useEffect(() => {
         worker.current ??= new LLMWorker();
 
-        const onMessageReceived = (e: Message) => {
+        const onMessageReceived = (e: MessageEvent<Data>) => {
             console.log(e.data);
 
             switch (e.data.status) {
@@ -54,24 +50,22 @@ const Assistant: FunctionComponent = () => {
                     setStatusText('Downloading model...');
                     break;
 
-                case 'progress':
+                case 'progress':  // a model file is downloading
                     setProgressItems(
-                        prev => prev.map(item => {
-                            if (item?.file === e.data?.file) {
-                                return { ...item, progress: e.data?.progress }
-                            }
-                            return item;
-                        })
+                        prev => prev.map(
+                            item => (item?.file === e.data?.file) ?
+                                { ...item, progress: e.data?.progress } :
+                                item)
                     );
                     break;
 
-                case 'done':
+                case 'done':  // a model file is downloaded
                     setProgressItems(
                         prev => prev.filter(item => item?.file !== e.data?.file)
                     );
                     break;
 
-                case 'ready':
+                case 'ready':  // all model files are downloaded
                     setReady(true);
                     setStatusText('Model downloaded. Awaiting response...');
                     break;
@@ -86,16 +80,16 @@ const Assistant: FunctionComponent = () => {
                     break;
 
                 case 'complete':
-                    if (e.data?.output) console.log(e.data.output);
                     setProgressItems([]);
                     setDisabled(false);
                     setStatusText('Model task completed');
+                    console.log(output);
                     break;
 
                 case 'error':
                     setProgressItems([]);
                     setDisabled(false);
-                    setStatusText(`${ready ? 'Model error' : 'Loading error'}`);
+                    setStatusText(`${ready ? 'Model error' : 'Download error'}`);
                     setOutput(e.data?.output || 'Unknown error');
                     break;
             }
@@ -120,8 +114,8 @@ const Assistant: FunctionComponent = () => {
 
             <div className='container'>
                 <div className='textbox-container'>
-                    <textarea value={input} disabled={disabled} onChange={e => setInput(e.target.value)} spellCheck='true' wrap='hard'></textarea>
-                    <textarea value={output} readOnly ref={textArea} wrap='soft'></textarea>
+                    <textarea value={input} disabled={disabled} spellCheck='true' onChange={e => setInput(e.target.value)}></textarea>
+                    <textarea value={output} readOnly ref={textArea}></textarea>
                 </div>
             </div>
 
