@@ -1,9 +1,9 @@
 import { env, pipeline, TextStreamer } from '@huggingface/transformers';
 import type { PipelineType, TextGenerationPipeline, ProgressCallback } from '@huggingface/transformers';
 
-import LLMConfig from './LLMConfig.json';
+import Config from './Config.json';
 
-class LLMWorker {
+class ModelPipeline {
     static instance: Promise<TextGenerationPipeline> | undefined;
 
     static async getInstance(progress_callback?: ProgressCallback) {
@@ -12,8 +12,8 @@ class LLMWorker {
         env.useBrowserCache = false;
 
         this.instance ??= pipeline<PipelineType>(
-            LLMConfig['task'] as PipelineType,
-            LLMConfig.model,
+            Config['task'] as PipelineType,
+            Config.model,
             {
                 progress_callback,
             }
@@ -25,7 +25,7 @@ class LLMWorker {
 
 self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => {
     try {
-        const generator = await LLMWorker.getInstance((x) => {
+        const generator = await ModelPipeline.getInstance((x) => {
             self.postMessage(x);
         });
     
@@ -40,10 +40,10 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
             },
         });
     
-        const messages = LLMConfig['chat_template'] ? [
+        const messages = Config['chat_template'] ? [
             {
                 role: 'system',
-                content: LLMConfig['system_role'],
+                content: Config['system_role'],
             },
             {
                 role: 'user',
@@ -52,11 +52,7 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
         ] : e.data?.prompt || '';
     
         await generator(messages, {
-            max_new_tokens: LLMConfig.config.max_new_tokens,
-            temperature: LLMConfig.config.temperature,
-            top_p: LLMConfig.config.top_p,
-            repetition_penalty: LLMConfig.config.repetition_penalty,
-            do_sample: LLMConfig.config.do_sample,
+            ...Config,
             return_full_text: false,
             streamer,
         });

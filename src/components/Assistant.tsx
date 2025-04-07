@@ -7,8 +7,8 @@ import {
 
 import './Assistant.css';
 import Progress from './Progress';
-import LLMWorker from '../llm/LLMWorker?worker';
-import LLMConfig from '../llm/LLMConfig.json';
+import Worker from '../model/Worker?worker';
+import Config from '../model/Config.json';
 
 interface Data {
     status: string;
@@ -38,7 +38,7 @@ const Assistant: FunctionComponent = () => {
     }
 
     useEffect(() => {
-        worker.current ??= new LLMWorker();
+        worker.current ??= new Worker();
 
         const onMessageReceived = (e: MessageEvent<Data>) => {
             console.log(e.data);
@@ -106,9 +106,9 @@ const Assistant: FunctionComponent = () => {
             <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
             <h3>
                 <code>
-                    Model: <a href={`https://huggingface.co/${LLMConfig.model}`} target='_blank' rel='noreferrer noopener'>{LLMConfig.model}</a>
+                    Model: <a href={`https://huggingface.co/${Config.model}`} target='_blank' rel='noreferrer noopener'>{Config.model}</a>
                     <br />
-                    Task: {LLMConfig.task}
+                    Task: {Config.task}
                 </code>
             </h3>
 

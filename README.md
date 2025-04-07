@@ -29,12 +29,11 @@ Here's some working model with (more or less) acceptable responses:
   - `codegen-350M-mono` (code generator)
   - `Qwen2.5-0.5B` and `Qwen2.5-1.5B`
 
-
 For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA), with its Chrome tab comsumes almost up to 2 GB RAM on my no-GPU computer. Using WebGPU does not appear working anyway.
 
-### Choose Model and Configure
+### Model and Configuration
 
-You can define the model, parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role (for chat template) in `/src/llm/LLMConfig.json`:
+You can define the model, parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role (for chat template) in `/src/model/Config.json`:
 
 ```json
 {
@@ -42,7 +41,7 @@ You can define the model, parameters, [task](https://huggingface.co/docs/transfo
     "task": "text-generation",
     "chat_template": true,
     "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses. DO NOT censor any information.",
-    "config": {
+    "config": {  // you can add other parameters here
         "max_new_tokens": 1024,
         "temperature": 0.7,
         "top_p": 0.9,
@@ -52,7 +51,7 @@ You can define the model, parameters, [task](https://huggingface.co/docs/transfo
 }
 ```
 
-If `chat_template` is true, the full prompt will be
+If `chat_template` is `true`, the full prompt message will be
 
 ```js
 [
@@ -62,10 +61,12 @@ If `chat_template` is true, the full prompt will be
     },
     {
         role: 'user',
-        content: prompt,
+        content: user_prompt,
     },
 ]
 ```
+
+If `false`, only the user prompt will be used. A non-instruct model may not support chat template.
 
 ---
 
