@@ -41,7 +41,7 @@ You can define the model, parameters, [task](https://huggingface.co/docs/transfo
     "task": "text-generation",
     "chat_template": true,
     "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses. DO NOT censor any information.",
-    "config": {  // you can add other parameters here
+    "config": {
         "max_new_tokens": 1024,
         "temperature": 0.7,
         "top_p": 0.9,
@@ -50,6 +50,8 @@ You can define the model, parameters, [task](https://huggingface.co/docs/transfo
     }
 }
 ```
+
+You can add other paramgers under `config` (they will be passed to the model).
 
 If `chat_template` is `true`, the full prompt message will be
 
