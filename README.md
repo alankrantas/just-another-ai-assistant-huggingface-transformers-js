@@ -21,7 +21,7 @@ The ones I've successfully tested includes:
 - `Qwen2.5-0.5B-Instruct` (1 VRAM)
 - `Qwen2.5-1.5B-Instruct` (3.1 VRAM; slightly slower than 0.5B)
 
-For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA). Hopefully we will have some other small but powerful models available.
+For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA) (WebGPU not enabled), with its Chrome tab comsumes almost up to 2 GB RAM on my no-GPU computer.
 
 ### Choose Model and Configure
 
