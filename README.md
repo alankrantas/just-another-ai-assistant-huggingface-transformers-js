@@ -14,14 +14,14 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
-Here's some model with acceptable responses:
+Here's some model with (more or less) acceptable responses:
 
 - Instruct (chat) models:
 
   - `OpenELM-270M-Instruct`
   - `Phi-3-mini-4k-instruct` and `Phi-3.5-mini-instruct` (extremely slow)
   - `Qwen2.5-0.5B-Instruct`, `Qwen2.5-1.5B-Instruct`, `Qwen2.5-Coder-0.5B-Instruct` and `Qwen2.5-Coder-1.5B-Instruct`
-  - `TinyLlama-1.1B-Chat-v1.0`
+  - `TinyLlama-1.1B-Chat-v1.0` (poorer response)
 
 - Non-instruct models (not using chat template):
 
@@ -30,11 +30,11 @@ Here's some model with acceptable responses:
   - `Qwen2.5-0.5B` and `Qwen2.5-1.5B`
 
 
-For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA) (WebGPU not enabled), with its Chrome tab comsumes almost up to 2 GB RAM on my no-GPU computer.
+For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA), with its Chrome tab comsumes almost up to 2 GB RAM on my no-GPU computer. Using WebGPU does not appear working anyway.
 
 ### Choose Model and Configure
 
-You can define the model, configuration parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role in `/src/llm/LLMConfig.json`.
+You can define the model, parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role (for chat template) in `/src/llm/LLMConfig.json`:
 
 ```json
 {
