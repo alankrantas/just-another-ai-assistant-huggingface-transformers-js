@@ -36,6 +36,7 @@ const Assistant: FunctionComponent = () => {
 
     const generate = () => {
         setDisabled(true);
+        etStatusText('');
         setOutput('');
         worker?.current?.postMessage({ prompt: input });
     }
