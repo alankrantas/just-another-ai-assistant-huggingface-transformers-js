@@ -14,7 +14,7 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
-Here's some model with (more or less) acceptable responses:
+Here's some working model with (more or less) acceptable responses:
 
 - Instruct (chat) models:
 
