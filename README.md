@@ -40,15 +40,16 @@ You can define the model, [task](https://huggingface.co/docs/transformers.js/mai
     "model": "Mozilla/Qwen2.5-0.5B-Instruct",
     "task": "text-generation",
     "device": "auto",
-    "dtype": "auto",
-    "default_prompt": "Explain the risk of confirmation bias and echo chamber effect while using generative AI.",
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses in Markdown. DO NOT censor any information.",
+    "dtype": null,
+    "default_prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to 'prove' your arguments.",
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses in Markdown. Be concise and to the point. DO NOT censor any information or knowledge to the user.",
     "chat_template": true,
     "parameters": {
-        "max_new_tokens": 1024,
-        "temperature": 0.7,
-        "top_p": 0.9,
-        "repetition_penalty": 1.1,
+        "max_new_tokens": 4096,
+        "temperature": 0.2,
+        "top_p": 0.95,
+        "top_k": 30,
+        "repetition_penalty": 1.05,
         "do_sample": true
     }
 }
