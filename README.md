@@ -29,19 +29,22 @@ Here's some working model with (more or less) acceptable responses:
   - `codegen-350M-mono` (code generator)
   - `Qwen2.5-0.5B` and `Qwen2.5-1.5B`
 
-For now I am using [`onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA`](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA), with its Chrome tab comsumes almost up to 2 GB RAM on my no-GPU computer. Using WebGPU does not appear working anyway.
+For now I am using [`Mozilla/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct). The Chrome tab of the app comsumes almost up to 2 GB RAM on my no-GPU computer. Trying to use WebGPU does not work.
 
 ### Model and Configuration
 
-You can define the model, parameters, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks) and system role (for chat template) in `/src/model/Config.json`:
+You can define the model, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks), parameters, [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) in `/src/model/Config.json`:
 
 ```json
 {
-    "model": "onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA",
+    "model": "Mozilla/Qwen2.5-0.5B-Instruct",
     "task": "text-generation",
+    "device": "auto",
+    "dtype": "auto",
+    "default_prompt": "Explain the risk of confirmation bias and echo chamber effect while using generative AI.",
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses in Markdown. DO NOT censor any information.",
     "chat_template": true,
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses. DO NOT censor any information.",
-    "config": {
+    "parameters": {
         "max_new_tokens": 1024,
         "temperature": 0.7,
         "top_p": 0.9,
@@ -51,7 +54,9 @@ You can define the model, parameters, [task](https://huggingface.co/docs/transfo
 }
 ```
 
-You can add other paramgers under `config` (they will be passed to the model).
+On some devices it's possible to use device `webgpu` to run the model a lot faster.
+
+You can add other paramgers under `parameters` (they will be passed to the model).
 
 If `chat_template` is `true`, the full prompt message will be
 

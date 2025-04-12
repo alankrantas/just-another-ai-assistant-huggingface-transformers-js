@@ -11,12 +11,17 @@ class ModelPipeline {
         env.allowLocalModels = false;
         env.useBrowserCache = false;
 
+        const options = {
+            progress_callback,
+        } as any;
+        
+        if (Config.device) options.device = Config.device;
+        if (Config.dtype && Config.dtype != 'auto') options.dtype = Config.dtype;
+
         this.instance ??= pipeline<PipelineType>(
-            Config['task'] as PipelineType,
+            Config.task as PipelineType,
             Config.model,
-            {
-                progress_callback,
-            }
+            options
         ) as Promise<TextGenerationPipeline>;
 
         return this.instance;
@@ -40,10 +45,10 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
             },
         });
     
-        const messages = Config['chat_template'] ? [
+        const messages = Config.chat_template ? [
             {
                 role: 'system',
-                content: Config['system_role'],
+                content: Config.system_role,
             },
             {
                 role: 'user',
@@ -52,7 +57,7 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
         ] : e.data?.prompt || '';
     
         await generator(messages, {
-            ...Config.config,
+            ...Config.parameters,
             return_full_text: false,
             streamer,
         });

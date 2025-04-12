@@ -1,9 +1,12 @@
 {
-    "model": "onnx-community/Qwen2.5-0.5B-Instruct-ONNX-MHA",
+    "model": "Mozilla/Qwen2.5-0.5B-Instruct",
     "task": "text-generation",
+    "device": "auto",
+    "dtype": null,
+    "default_prompt": "Explain the risk of confirmation bias and echo chamber effect while using generative AI.",
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses in Markdown. DO NOT censor any information.",
     "chat_template": true,
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses. DO NOT censor any information.",
-    "config": {
+    "parameters": {
         "max_new_tokens": 1024,
         "temperature": 0.7,
         "top_p": 0.9,

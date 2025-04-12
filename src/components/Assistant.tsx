@@ -23,14 +23,18 @@ const Assistant: FunctionComponent = () => {
     const worker = useRef<Worker | null>(null);
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
-    const [input, setInput] = useState('What is the answer to the meaning of life, the universe and everything?');
+    const [input, setInput] = useState(Config.default_prompt || '');
     const [output, setOutput] = useState('');
     const [ready, setReady] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [progressItems, setProgressItems] = useState<Data[]>([]);
-    const [statusText, setStatusText] = useState('Run a small language model locally on browser (need to be downloaded once)');
+    const [statusText, setStatusText] = useState('Run a language model locally on your browser (need to be downloaded once)');
 
     const generate = () => {
+        if (!input) {
+            alert('Please provide some prompt for the model!');
+            return;
+        }
         setDisabled(true);
         setStatusText('');
         setOutput('');
