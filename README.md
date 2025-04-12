@@ -29,7 +29,7 @@ Here's some working model with (more or less) acceptable responses:
   - `codegen-350M-mono` (code generator)
   - `Qwen2.5-0.5B` and `Qwen2.5-1.5B`
 
-For now I am using [`Mozilla/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct). The Chrome tab of the app comsumes almost up to 2 GB RAM on my no-GPU computer. Trying to use WebGPU does not work.
+For now I am using [`Mozilla/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct). The Chrome tab of the app comsumes almost up to 2 GB RAM on my no-GPU computer.
 
 ### Model and Configuration
 
@@ -54,7 +54,7 @@ You can define the model, [task](https://huggingface.co/docs/transformers.js/mai
 }
 ```
 
-On some devices it's possible to use device `webgpu` to run the model a lot faster.
+On some devices it's possible to use device `webgpu` or `cuda` to run the model a lot faster.
 
 You can add other paramgers under `parameters` (they will be passed to the model).
 
