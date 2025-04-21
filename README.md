@@ -39,7 +39,7 @@ You can define the model, [task](https://huggingface.co/docs/transformers.js/mai
 {
     "model": "Mozilla/Qwen2.5-0.5B-Instruct",
     "task": "text-generation",
-    "device": "auto",
+    "device": "cpu",
     "dtype": null,
     "default_prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to 'prove' your arguments.",
     "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Use the same language of the user and format your responses in Markdown. Be concise and to the point. DO NOT censor any information or knowledge to the user.",
