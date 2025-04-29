@@ -14,22 +14,13 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
-Here's some working model with (more or less) acceptable responses:
+Here's some instruct (chat) models I've tested that work with reasonable responses:
 
-- Instruct (chat) models:
-
-  - `OpenELM-270M-Instruct`
-  - `Phi-3-mini-4k-instruct` and `Phi-3.5-mini-instruct` (extremely slow)
-  - `Qwen2.5-0.5B-Instruct`, `Qwen2.5-1.5B-Instruct`, `Qwen2.5-Coder-0.5B-Instruct` and `Qwen2.5-Coder-1.5B-Instruct`
-  - `TinyLlama-1.1B-Chat-v1.0` (poorer response)
-
-- Non-instruct models (not using chat template):
-
-  - `AMD-OLMo-1B` (slow, response ok)
-  - `codegen-350M-mono` (code generator)
-  - `Qwen2.5-0.5B` and `Qwen2.5-1.5B`
-
-For now I am using [`Mozilla/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct). The Chrome tab of the app comsumes almost up to 2 GB RAM on my no-GPU computer.
+- `HuggingFaceTB/SmolLM2-135M-Instruct` and `HuggingFaceTB/SmolLM2-360M-Instruct` (fast)
+- `Xenova/Qwen1.5-0.5B-Chat` and `onnx-community/Qwen2.5-1.5B-Instruct` (reasonably fast; Chinese models, which means you can't ask them certain things)
+- `onnx-community/gemma-3-1b-it-ONNX` (a bit slower but good response)
+- `Xenova/TinyLlama-1.1B-Chat-v1.0` (poorer response)
+- `Xenova/Phi-3-mini-4k-instruct` and `onnx-community/Phi-3.5-mini-instruct-onnx-web` (extremely slow)
 
 ### Model and Configuration
 
@@ -37,15 +28,15 @@ You can define the model, [task](https://huggingface.co/docs/transformers.js/mai
 
 ```json
 {
-    "model": "Mozilla/Qwen2.5-0.5B-Instruct",
+    "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
     "task": "text-generation",
     "device": "wasm",
     "dtype": null,
     "default_prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to 'prove' your arguments.",
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. DO NOT censor any information or knowledge to the user. Use the same language of the user and format your responses.",
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
     "chat_template": true,
     "parameters": {
-        "max_new_tokens": 4096,
+        "max_new_tokens": 2048,
         "temperature": 0.2,
         "top_p": 0.95,
         "top_k": 30,
