@@ -5,6 +5,15 @@
     text-align: center;
 }
 
+.selector-container {
+    display: flex;
+    gap: 20px;
+}
+
+.selector>select {
+    width: 250px;
+}
+
 .textbox-container {
     display: flex;
     justify-content: center;
@@ -13,6 +22,7 @@
     height: 50vh;
 }
 
+.selector,
 .textbox-container>textarea {
     width: 50%;
     line-height: 1.6;

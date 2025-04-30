@@ -1,39 +1,38 @@
 import { env, pipeline, TextStreamer } from '@huggingface/transformers';
-import type { PipelineType, TextGenerationPipeline, ProgressCallback } from '@huggingface/transformers';
+import type { PipelineType, Pipeline, ProgressCallback } from '@huggingface/transformers';
 
 import Config from './Config.json';
+import type { Input } from '../types/Type';
 
 class ModelPipeline {
-    static instance: Promise<TextGenerationPipeline> | undefined;
+    static instance: Promise<Pipeline> | undefined;
 
-    static async getInstance(progress_callback?: ProgressCallback) {
+    static async getInstance(input: Input, progress_callback?: ProgressCallback) {
         env.allowRemoteModels = true;
         env.allowLocalModels = false;
         env.useBrowserCache = false;
 
-        const options = {
-            progress_callback,
-        } as any;
-        
-        if (Config.device) options.device = Config.device;
-        if (Config.dtype && Config.dtype != 'auto') options.dtype = Config.dtype;
+        const options: any = {
+            device: input.device,
+            dtype: 'auto',
+            progress_callback
+        };
 
-        this.instance ??= pipeline<PipelineType>(
-            Config.task as PipelineType,
-            Config.model,
-            options
-        ) as Promise<TextGenerationPipeline>;
+        this.instance ??= pipeline<PipelineType>(input.task as PipelineType, input.model, options) as Promise<Pipeline>;
 
         return this.instance;
     }
 }
 
-self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => {
+self.addEventListener('message', async (e: MessageEvent<Input>) => {
+    console.log(e);
+
     try {
-        const generator = await ModelPipeline.getInstance((x) => {
-            self.postMessage(x);
-        });
-    
+        const generator = await ModelPipeline.getInstance(
+            e.data,
+            (x) => { self.postMessage(x) }
+        );
+
         const streamer = new TextStreamer(generator.tokenizer, {
             skip_prompt: true,
             skip_special_tokens: true,
@@ -44,18 +43,18 @@ self.addEventListener('message', async (e: MessageEvent<{ prompt: string }>) => 
                 });
             },
         });
-    
-        const messages = Config.chat_template ? [
+
+        const messages = [
             {
                 role: 'system',
                 content: Config.system_role,
             },
             {
                 role: 'user',
-                content: e.data?.prompt || '',
+                content: e.data?.text || '',
             },
-        ] : e.data?.prompt || '';
-    
+        ];
+
         await generator(messages, {
             ...Config.parameters,
             return_full_text: false,

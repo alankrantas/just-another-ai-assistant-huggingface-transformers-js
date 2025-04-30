@@ -6,9 +6,11 @@ import {
 } from 'react';
 
 import './Assistant.css';
+import Selector from './Selector';
 import Progress from './Progress';
 import Worker from '../model/Worker?worker';
 import Config from '../model/Config.json';
+import type { Input } from '../types/Type';
 
 interface Data {
     status: string;
@@ -18,27 +20,39 @@ interface Data {
     output?: string;
 }
 
+const default_prompt = 'Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to "prove" your arguments.'
+const default_model = Config.models['SmolLM2-360M-Instruct'];
+const default_task = Config.tasks['Text Generation'];
+const default_device = Config.devices['WASM'];
+
 const Assistant: FunctionComponent = () => {
 
     const worker = useRef<Worker | null>(null);
     const textArea = useRef<HTMLTextAreaElement | null>(null);
 
-    const [input, setInput] = useState(Config.default_prompt || '');
+    const [input, setInput] = useState<Input>({
+        text: default_prompt,
+        model: default_model,
+        task: default_task,
+        device: default_device,
+    });
     const [output, setOutput] = useState('');
     const [ready, setReady] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const [modelDisabled, setModelDisabled] = useState(false);
     const [progressItems, setProgressItems] = useState<Data[]>([]);
-    const [statusText, setStatusText] = useState('Run a language model locally on your browser (need to be downloaded once)');
+    const [statusText, setStatusText] = useState('Run a small LLM locally in browser');
 
     const generate = () => {
-        if (!input) {
+        if (!input.text) {
             alert('Please provide some prompt for the model!');
             return;
         }
+        if (!modelDisabled) setModelDisabled(true);
         setDisabled(true);
         setStatusText('');
         setOutput('');
-        worker?.current?.postMessage({ prompt: input });
+        worker?.current?.postMessage(input);
     }
 
     useEffect(() => {
@@ -71,7 +85,7 @@ const Assistant: FunctionComponent = () => {
 
                 case 'ready':  // all model files are downloaded
                     setReady(true);
-                    setStatusText('Model downloaded. Awaiting response...');
+                    setStatusText('Download completed...');
                     break;
 
                 case 'update':
@@ -80,13 +94,13 @@ const Assistant: FunctionComponent = () => {
                         const area = textArea.current;
                         if (area) area.scrollTop = area.scrollHeight;
                     }
-                    setStatusText('Model running...');
+                    setStatusText('Model inferencing...');
                     break;
 
                 case 'complete':
                     setProgressItems([]);
                     setDisabled(false);
-                    setStatusText('Model task completed');
+                    setStatusText('Task completed (refresh to switch model)');
                     console.log(output);
                     break;
 
@@ -108,23 +122,23 @@ const Assistant: FunctionComponent = () => {
         <>
             <h1>Just Another AI Assistant</h1>
             <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
-            <h3>
-                <code>
-                    Model: <a href={`https://huggingface.co/${Config.model}`} target='_blank' rel='noreferrer noopener'>{Config.model}</a>
-                    <br />
-                    Task: {Config.task}
-                </code>
-            </h3>
 
             <div className='container'>
+                <div className='selector-container'>
+                    <Selector disabled={modelDisabled} title={'Model'} items={Config.models} defaultItem={default_model} onChange={e => setInput({ ...input, model: e.target.value })} />
+                    <Selector disabled={disabled} title={'Task'} items={Config.tasks} defaultItem={default_task} onChange={e => setInput({ ...input, task: e.target.value })} />
+                </div>
+                <div className='selector-container'>
+                    <Selector disabled={modelDisabled} title={'Device'} items={Config.devices} defaultItem={default_device} onChange={e => setInput({ ...input, device: e.target.value })} />
+                </div>
                 <div className='textbox-container'>
-                    <textarea value={input} disabled={disabled} spellCheck='true' onChange={e => setInput(e.target.value)}></textarea>
+                    <textarea value={input.text} disabled={disabled} spellCheck='true' onChange={e => setInput({ ...input, text: e.target.value })}></textarea>
                     <textarea value={output} readOnly ref={textArea}></textarea>
                 </div>
             </div>
 
             <button disabled={disabled} onClick={generate}>
-                {disabled ? 'Generating...' : 'Generate'}
+                {disabled ? (ready ? 'Generating' : 'Waiting') : (ready ? 'Generate' : 'Download and Generate')}
             </button>
 
             <div className='progress-bars-container'>

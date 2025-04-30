@@ -33,6 +33,11 @@ h2 {
     color: #ffffff;
 }
 
+select {
+    padding: 0.3em;
+    cursor: pointer;
+}
+
 textarea {
     padding: 0.6em;
 }
@@ -51,6 +56,7 @@ button[disabled] {
     color: #aaa;
 }
 
+select,
 textarea,
 button {
     border-radius: 8px;
@@ -62,11 +68,14 @@ button {
     transition: border-color 0.25s, background-color 0.25s;
 }
 
+select:hover,
 textarea:hover,
 button:not([disabled]):hover {
     border-color: #66d9ef;
 }
 
+select:focus,
+select:focus-visible,
 textarea:focus,
 textarea:focus-visible,
 button:focus,
