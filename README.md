@@ -6,7 +6,7 @@
 
 A simple demonstration modified from HuggingFace's [React-translator](https://github.com/huggingface/transformers.js/tree/main/examples/react-translator) example with TypeScript support.
 
-The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.js/index) to load and run a smaller large language model (LLM) - or small language model (SLM) in the web browser. It uses `Vite`'s `Worker` to run the model in the background, hence this would have to be a React or Svelte app.
+The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.js/index) to load and run a smaller large language model (LLM) - or small language model (SLM) in the web browser. The app uses `Vite`'s `Worker` to run the model in the background, hence this would have to be a React or Svelte app.
 
 ---
 
@@ -39,18 +39,11 @@ You can define the [models](https://huggingface.co/models?pipeline_tag=text-gene
         "Translation": "translation"
     },
     "devices": {
+        "Auto": "auto",
         "WASM": "wasm",
         "WebGPU": "webgpu"
     },
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
-    "parameters": {
-        "max_new_tokens": 2048,
-        "temperature": 0.2,
-        "top_p": 0.95,
-        "top_k": 30,
-        "repetition_penalty": 1.05,
-        "do_sample": true
-    }
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses."
 }
 ```
 

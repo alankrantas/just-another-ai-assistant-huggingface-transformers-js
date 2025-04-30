@@ -22,16 +22,9 @@
         "Translation": "translation"
     },
     "devices": {
+        "Auto": "auto",
         "WASM": "wasm",
         "WebGPU": "webgpu"
     },
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
-    "parameters": {
-        "max_new_tokens": 2048,
-        "temperature": 0.2,
-        "top_p": 0.95,
-        "top_k": 30,
-        "repetition_penalty": 1.05,
-        "do_sample": true
-    }
+    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses."
 }

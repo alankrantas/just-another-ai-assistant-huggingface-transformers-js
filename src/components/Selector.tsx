@@ -4,8 +4,9 @@ import type {
 } from "react";
 
 interface SelectorProps {
-    disabled: boolean;
+    disabled?: boolean;
     title: string;
+    tooltip?: string;
     items: {
         [key: string]: string;
     };
@@ -13,10 +14,21 @@ interface SelectorProps {
     onChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
-const Selector: FunctionComponent<SelectorProps> = ({ disabled, title, items, defaultItem, onChange }) => {
+const Selector: FunctionComponent<SelectorProps> = ({ disabled = false, title, tooltip = '', items, defaultItem, onChange }) => {
     return (
         <div className="selector">
-            <label><b>{title}</b>:&nbsp;</label>
+            <label>
+                {title}
+                {tooltip ? (
+                    <span className="tooltip">
+                        &nbsp;ⓘ&nbsp;
+                        <span className="tooltiptext">
+                            <code>{tooltip}</code>
+                        </span>
+                    </span>
+                ) : (<span></span>)}
+                :&nbsp;
+            </label>
             <select disabled={disabled} onChange={onChange} defaultValue={defaultItem}>
                 {Object.entries(items).map(([key, value]) => {
                     return <option key={key} value={value}>{key}</option>

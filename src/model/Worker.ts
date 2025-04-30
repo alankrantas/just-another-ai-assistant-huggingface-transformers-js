@@ -25,13 +25,15 @@ class ModelPipeline {
 }
 
 self.addEventListener('message', async (e: MessageEvent<Input>) => {
-    console.log(e);
+    console.log(e.data);
 
     try {
         const generator = await ModelPipeline.getInstance(
             e.data,
             (x) => { self.postMessage(x) }
         );
+
+        const parameters = e.data.parameters.do_sample ? { ...e.data.parameters } : { do_sample: false };
 
         const streamer = new TextStreamer(generator.tokenizer, {
             skip_prompt: true,
@@ -56,7 +58,7 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         ];
 
         await generator(messages, {
-            ...Config.parameters,
+            ...parameters,
             return_full_text: false,
             streamer,
         });

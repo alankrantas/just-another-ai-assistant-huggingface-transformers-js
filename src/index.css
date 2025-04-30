@@ -86,10 +86,124 @@ button:focus-visible {
 a {
     color: #66d9ef;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.25s ease;
 }
 
 a:hover {
     color: #9beeff;
     text-decoration: underline;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 150px;
+    height: 8px;
+    cursor: pointer;
+    background: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    transition: box-shadow 0.25s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    margin-top: -4px;
+    transition: border-color 0.25s, background-color 0.25s;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    border-color: #66d9ef;
+}
+
+input[type="range"]:hover::-webkit-slider-runnable-track {
+    box-shadow: 0 0 0 1px #66d9ef;
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    transition: box-shadow 0.25s;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.25s, background-color 0.25s;
+}
+
+input[type="range"][disabled]::-moz-range-thumb {
+    cursor: not-allowed;
+    background-color: #444;
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+    border-color: #66d9ef;
+}
+
+input[type="range"]:hover::-moz-range-track {
+    box-shadow: 0 0 0 1px #66d9ef;
+}
+
+input[type="range"][disabled]::-webkit-slider-thumb {
+    cursor: not-allowed;
+    background-color: #444;
+}
+
+input[type="range"][disabled]::-moz-range-thumb {
+    cursor: not-allowed;
+    background-color: #444;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #2d2d2d;
+    border: 2px solid transparent;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.25s, background-color 0.25s;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #66d9ef;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #f0f0f0;
+}
+
+input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 10px;
+    border: solid #2d2d2d;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+input[type="checkbox"]:checked::after {
+    opacity: 1;
 }
