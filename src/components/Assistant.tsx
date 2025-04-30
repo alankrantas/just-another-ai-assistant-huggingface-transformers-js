@@ -41,7 +41,7 @@ const Assistant: FunctionComponent = () => {
     const [disabled, setDisabled] = useState(false);
     const [modelDisabled, setModelDisabled] = useState(false);
     const [progressItems, setProgressItems] = useState<Data[]>([]);
-    const [statusText, setStatusText] = useState('Run a small LLM locally in browser');
+    const [statusText, setStatusText] = useState('');
 
     const generate = () => {
         if (!input.text) {
@@ -107,7 +107,7 @@ const Assistant: FunctionComponent = () => {
                 case 'error':
                     setProgressItems([]);
                     setDisabled(false);
-                    setStatusText(`${ready ? 'Model error' : 'Download error'}`);
+                    setStatusText(`${ready ? 'Model error' : 'Download error'} (refresh to switch model)`);
                     setOutput(e.data?.output || 'Unknown error');
                     break;
             }
@@ -121,7 +121,7 @@ const Assistant: FunctionComponent = () => {
     return (
         <>
             <h1>Just Another AI Assistant</h1>
-            <h2>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h2>
+            <h3>HuggingFace Transformers.js Demo (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)</h3>
 
             <div className='container'>
                 <div className='selector-container'>
