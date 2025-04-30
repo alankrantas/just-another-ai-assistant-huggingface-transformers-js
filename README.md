@@ -14,27 +14,39 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
 
-Here's some instruct (chat) models I've tested that work with reasonable responses:
-
-- `HuggingFaceTB/SmolLM2-135M-Instruct` and `HuggingFaceTB/SmolLM2-360M-Instruct` (fast)
-- `Xenova/Qwen1.5-0.5B-Chat` and `onnx-community/Qwen2.5-1.5B-Instruct` (reasonably fast; Chinese models, which means you can't ask them certain things)
-- `onnx-community/gemma-3-1b-it-ONNX` (a bit slower but good response)
-- `Xenova/TinyLlama-1.1B-Chat-v1.0` (poorer response)
-- `Xenova/Phi-3-mini-4k-instruct` and `onnx-community/Phi-3.5-mini-instruct-onnx-web` (extremely slow)
-
 ### Model and Configuration
 
-You can define the model, [task](https://huggingface.co/docs/transformers.js/main/en/index#tasks), parameters, [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) in `/src/model/Config.json`:
+You can define the models, [tasks](https://huggingface.co/docs/transformers.js/main/en/index#tasks), [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and model parameters in `/src/model/Config.json`:
 
 ```json
 {
-    "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
-    "task": "text-generation",
-    "device": "wasm",
-    "dtype": null,
-    "default_prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to 'prove' your arguments.",
+    "models": {
+        "SmolLM2-135M-Instruct": "HuggingFaceTB/SmolLM2-135M-Instruct",
+        "SmolLM2-360M-Instruct": "HuggingFaceTB/SmolLM2-360M-Instruct",
+        "OpenELM-270M-Instruct": "Xenova/OpenELM-270M-Instruct",
+        "Qwen2.5-0.5B-Instruct": "Mozilla/Qwen2.5-0.5B-Instruct",
+        "Qwen2.5-1.5B-Instruct": "onnx-community/Qwen2.5-1.5B-Instruct",
+        "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct",
+        "Phi-3.5-mini-Instruct": "onnx-community/Phi-3.5-mini-instruct-onnx-web",
+        "Gemma-3-1B-It": "onnx-community/gemma-3-1b-it-ONNX",
+        "Falcon3-1B-Instruct": "onnx-community/Falcon3-1B-Instruct",
+        "TinyLlama-1.1B-Chat": "Xenova/TinyLlama-1.1B-Chat-v1.0",
+        "TinySwallow-1.5B-Instruct": "onnx-community/TinySwallow-1.5B-Instruct-ONNX"
+    },
+    "tasks": {
+        "Text Generation": "text-generation",
+        "Text-to-text Generation": "text2text-generation",
+        "Text Classification": "text-classification",
+        "Question Answering": "question-answering",
+        "Summarization": "summarization",
+        "Fill-Mask": "fill-mask",
+        "Translation": "translation"
+    },
+    "devices": {
+        "WASM": "wasm",
+        "WebGPU": "webgpu"
+    },
     "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
-    "chat_template": true,
     "parameters": {
         "max_new_tokens": 2048,
         "temperature": 0.2,
@@ -46,11 +58,11 @@ You can define the model, [task](https://huggingface.co/docs/transformers.js/mai
 }
 ```
 
-On some devices it's possible to use device `webgpu` or `cuda` to run the model a lot faster.
+Be noted that WebGPU may not work on some devices and models. [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`.
 
 You can add other paramgers under `parameters` (they will be passed to the model).
 
-If `chat_template` is `true`, the full prompt message will be
+A "chat template" will be used for these instruct models, which may also not supported by some other models:
 
 ```js
 [
@@ -64,8 +76,6 @@ If `chat_template` is `true`, the full prompt message will be
     },
 ]
 ```
-
-If `false`, only the user prompt will be used. A non-instruct model may not support chat template.
 
 ---
 
