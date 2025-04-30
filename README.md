@@ -10,13 +10,9 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 ---
 
-## "Small" Large Language Model
+## "Small" Large Language Model and Configuration
 
-Among [models](https://llm.extractum.io/list/) require less than 4 or 8 GB VRAM, there are [not many](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending) compatible with `Transformers.js`, and even fewer can be loaded and run without errors.
-
-### Model and Configuration
-
-You can define the models, [tasks](https://huggingface.co/docs/transformers.js/main/en/index#tasks), [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and model parameters in `/src/model/Config.json`:
+You can define the [models](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending), [tasks](https://huggingface.co/docs/transformers.js/main/en/index#tasks), [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and model parameters in `/src/model/Config.json`:
 
 ```json
 {
@@ -58,11 +54,11 @@ You can define the models, [tasks](https://huggingface.co/docs/transformers.js/m
 }
 ```
 
-Be noted that WebGPU may not work on some devices and models. [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`.
+Be noted that not all model works, and WASM/WebGPU may not work on some devices and models. [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`.
 
 You can add other paramgers under `parameters` (they will be passed to the model).
 
-A "chat template" will be used for these instruct models, which may also not supported by some other models:
+A "chat template" will be used for instruct models, which may also not supported by some other models:
 
 ```js
 [
