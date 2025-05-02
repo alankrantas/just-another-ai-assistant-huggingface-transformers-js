@@ -22,34 +22,36 @@ You can define the [models](https://huggingface.co/models?pipeline_tag=text-gene
         "OpenELM-270M-Instruct": "Xenova/OpenELM-270M-Instruct",
         "Qwen2.5-0.5B-Instruct": "Mozilla/Qwen2.5-0.5B-Instruct",
         "Qwen2.5-1.5B-Instruct": "onnx-community/Qwen2.5-1.5B-Instruct",
-        "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct",
-        "Phi-3.5-mini-Instruct": "onnx-community/Phi-3.5-mini-instruct-onnx-web",
         "Gemma-3-1B-It": "onnx-community/gemma-3-1b-it-ONNX",
         "Falcon3-1B-Instruct": "onnx-community/Falcon3-1B-Instruct",
         "TinyLlama-1.1B-Chat": "Xenova/TinyLlama-1.1B-Chat-v1.0",
-        "TinySwallow-1.5B-Instruct": "onnx-community/TinySwallow-1.5B-Instruct-ONNX"
-    },
-    "tasks": {
-        "Text Generation": "text-generation",
-        "Text-to-text Generation": "text2text-generation",
-        "Text Classification": "text-classification",
-        "Question Answering": "question-answering",
-        "Summarization": "summarization",
-        "Fill-Mask": "fill-mask",
-        "Translation": "translation"
+        "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct",
+        "Phi-3.5-mini-Instruct": "onnx-community/Phi-3.5-mini-instruct-onnx-web"
     },
     "devices": {
         "Auto": "auto",
         "WASM": "wasm",
         "WebGPU": "webgpu"
     },
-    "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses."
+    "defaults": {
+        "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+        "task": "text-generation",
+        "device": "wasm",
+        "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
+        "prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to \"prove\" your arguments.",
+        "config": {
+            "max_new_tokens": 1024,
+            "temperature": 0.2,
+            "top_p": 0.95,
+            "top_k": 30,
+            "repetition_penalty": 1.05,
+            "do_sample": true
+        }
+    }
 }
 ```
 
-Be noted that not all model works, and WASM/WebGPU may not work on some devices and models. [dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`.
-
-You can add other paramgers under `parameters` (they will be passed to the model).
+[dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`. I only included models that work here, but some may not work on WASM or WebGPU on your machine.
 
 A "chat template" will be used for instruct models, which may also not supported by some other models:
 

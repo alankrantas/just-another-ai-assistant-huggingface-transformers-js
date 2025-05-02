@@ -33,8 +33,6 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
             (x) => { self.postMessage(x) }
         );
 
-        const parameters = e.data.parameters.do_sample ? { ...e.data.parameters } : { do_sample: false };
-
         const streamer = new TextStreamer(generator.tokenizer, {
             skip_prompt: true,
             skip_special_tokens: true,
@@ -49,7 +47,7 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         const messages = [
             {
                 role: 'system',
-                content: Config.system_role,
+                content: Config.defaults.system_role,
             },
             {
                 role: 'user',
@@ -58,7 +56,7 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
         ];
 
         await generator(messages, {
-            ...parameters,
+            ...e.data.parameters,
             return_full_text: false,
             streamer,
         });

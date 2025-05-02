@@ -96,14 +96,12 @@ a:hover {
 
 input[type="range"] {
     -webkit-appearance: none;
-    width: 150px;
-    height: 8px;
+    padding: 0.3em;
     cursor: pointer;
     background: transparent;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-    height: 10px;
     background: #2d2d2d;
     border-radius: 4px;
     transition: box-shadow 0.25s;
@@ -174,6 +172,7 @@ input[type="checkbox"] {
     appearance: none;
     width: 20px;
     height: 20px;
+    padding: 0.3em;
     border-radius: 50%;
     background-color: #2d2d2d;
     border: 2px solid transparent;

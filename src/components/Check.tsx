@@ -13,7 +13,7 @@ interface CheckProps {
 
 const Check: FunctionComponent<CheckProps> = ({ disabled = false, title, tooltip = '', checked, onChange }) => {
     return (
-        <div className="range-item-container">
+        <div className="check">
             <label>
                 {title}
                 {tooltip ? (

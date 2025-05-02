@@ -16,7 +16,7 @@ interface RangeProps {
 
 const Range: FunctionComponent<RangeProps> = ({ disabled = false, title, tooltip = '', min, max, step, value, onChange }) => {
     return (
-        <div className="range-item-container">
+        <div className="range">
             <label>
                 {title}
                 {tooltip ? (
