@@ -102,7 +102,7 @@ const Assistant: FunctionComponent = () => {
                     setStatus({
                         ...status,
                         ready: true,
-                        statusText: 'Download completed...',
+                        statusText: 'Download completed, awating response...',
                     });
                     break;
 
@@ -123,7 +123,7 @@ const Assistant: FunctionComponent = () => {
                     setStatus({
                         ...status,
                         disabled: false,
-                        statusText: 'Task completed (refresh to switch model)',
+                        statusText: 'Task completed',
                     })
                     console.log(output);
                     break;
@@ -176,6 +176,7 @@ const Assistant: FunctionComponent = () => {
                 </div>
                 <div className='control-container'>
                     <Range
+                        disabled={status.disabled}
                         title="Max new tokens"
                         tooltip="This sets the maximum number of tokens (words, characters, or subwords) the model can generate in its output. For example, limiting this ensures concise responses."
                         min={256}
@@ -185,7 +186,7 @@ const Assistant: FunctionComponent = () => {
                         onChange={e => setInput({ ...input, parameters: { ...input.parameters, max_new_tokens: Number(e.target.value) } })}
                     />
                     <Range
-                        disabled={!input.parameters.do_sample}
+                        disabled={status.disabled || !input.parameters.do_sample}
                         title="Temperature"
                         tooltip="This controls randomness in the model's output. A low temperature (e.g., 0.2) makes the responses more deterministic and focused, while a high temperature (e.g., 1.0) increases creativity and variability."
                         min={0.0}
@@ -197,6 +198,7 @@ const Assistant: FunctionComponent = () => {
                 </div>
                 <div className='control-container'>
                     <Range
+                        disabled={status.disabled}
                         title="Repetition penalty"
                         tooltip="This reduces redundancy by penalizing repetitive sequences or words. For instance, setting it to 1.2 encourages the model to generate varied responses instead of repeating itself."
                         min={1.0}
@@ -206,7 +208,7 @@ const Assistant: FunctionComponent = () => {
                         onChange={e => setInput({ ...input, parameters: { ...input.parameters, repetition_penalty: Number(e.target.value) } })}
                     />
                     <Range
-                        disabled={!input.parameters.do_sample}
+                        disabled={status.disabled || !input.parameters.do_sample}
                         title="Top P"
                         tooltip="Also called nucleus sampling, this adjusts the probability distribution of tokens. The model considers tokens until the cumulative probability reaches the specified value (e.g., 0.95), creating more focused and realistic outputs."
                         min={0.0}
@@ -218,13 +220,14 @@ const Assistant: FunctionComponent = () => {
                 </div>
                 <div className='control-container'>
                     <Check
+                        disabled={status.disabled}
                         title="Do sample"
                         tooltip="When enabled (set to True), the model samples tokens from the probability distribution, making responses more creative and less predictable. If set to False, the output becomes more deterministic and does not affected by Temperature, Top P and Top K."
                         checked={input.parameters.do_sample}
                         onChange={e => setInput({ ...input, parameters: { ...input.parameters, do_sample: !input.parameters.do_sample } })}
                     />
                     <Range
-                        disabled={!input.parameters.do_sample}
+                        disabled={status.disabled || !input.parameters.do_sample}
                         title="Top K"
                         tooltip="This limits the model's token selection to the top k most probable choices. For example, if top_k = 30, the model will only consider the 30 most likely tokens, encouraging diversity."
                         min={1}
@@ -236,13 +239,24 @@ const Assistant: FunctionComponent = () => {
                 </div>
 
                 <div className='textbox-container'>
-                    <textarea value={input.text} disabled={status.disabled} spellCheck='true' onChange={e => setInput({ ...input, text: e.target.value })}></textarea>
-                    <textarea value={output} readOnly ref={textArea}></textarea>
+                    <textarea
+                        disabled={status.disabled}
+                        spellCheck='true'
+                        value={input.text}
+                        onChange={e => setInput({ ...input, text: e.target.value })}
+                        className={status.disabled ? '' : 'highlight'}
+                    ></textarea>
+                    <textarea
+                        readOnly
+                        ref={textArea}
+                        value={output}
+                        className={status.disabled ? '' : 'highlight'}
+                    ></textarea>
                 </div>
             </div>
 
             <button disabled={status.disabled} onClick={generate}>
-                {status.error ? 'Refresh' : (status.disabled ? (status.ready ? 'Generating' : 'Waiting') : (status.ready ? 'Generate' : 'Download and Generate'))}
+                {status.error ? 'Refresh' : (status.disabled ? (status.ready ? 'Generating...' : 'Waiting...') : (status.ready ? 'Generate' : 'Download and Generate'))}
             </button>
 
             <div className='progress-bars-container'>

@@ -22,14 +22,31 @@
     width: 250px;
 }
 
+.range {
+    display: flex;
+    align-items: center;
+    /* vertically align input with label */
+    gap: 8px;
+}
+
 .range>input[type="range"] {
     width: 150px;
     height: 10px;
+    margin: 0;
+    vertical-align: middle;
 }
 
-.check>input[type="check"] {
-    width: 10px;
-    height: 10px;
+.check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.check>input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    vertical-align: middle;
 }
 
 .textbox-container {
@@ -46,6 +63,10 @@
 .textbox-container>textarea {
     width: 50%;
     line-height: 1.6;
+}
+
+.highlight:hover {
+    border-color: #66d9ef;
 }
 
 .progress-container {

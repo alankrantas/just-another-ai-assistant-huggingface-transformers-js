@@ -68,8 +68,7 @@ button {
     transition: border-color 0.25s, background-color 0.25s;
 }
 
-select:hover,
-textarea:hover,
+select:not([disabled]):hover,
 button:not([disabled]):hover {
     border-color: #66d9ef;
 }
@@ -102,6 +101,7 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
     background: #2d2d2d;
     border-radius: 4px;
     transition: box-shadow 0.25s;
@@ -118,11 +118,12 @@ input[type="range"]::-webkit-slider-thumb {
     transition: border-color 0.25s, background-color 0.25s;
 }
 
-input[type="range"]:hover::-webkit-slider-thumb {
+input[type="range"]:hover:not([disabled])::-webkit-slider-thumb {
     border-color: #66d9ef;
 }
 
-input[type="range"]:hover::-webkit-slider-runnable-track {
+input[type="range"]:not([disabled]):hover::-webkit-slider-runnable-track {
+    height: 8px;
     box-shadow: 0 0 0 1px #66d9ef;
 }
 
@@ -148,11 +149,11 @@ input[type="range"][disabled]::-moz-range-thumb {
     background-color: #444;
 }
 
-input[type="range"]:hover::-moz-range-thumb {
+input[type="range"]:not([disabled]):hover::-moz-range-thumb {
     border-color: #66d9ef;
 }
 
-input[type="range"]:hover::-moz-range-track {
+input[type="range"]:not([disabled]):hover::-moz-range-track {
     box-shadow: 0 0 0 1px #66d9ef;
 }
 
@@ -170,8 +171,6 @@ input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
     padding: 0.3em;
     border-radius: 50%;
     background-color: #2d2d2d;
@@ -181,12 +180,21 @@ input[type="checkbox"] {
     transition: border-color 0.25s, background-color 0.25s;
 }
 
-input[type="checkbox"]:hover {
+input[type="checkbox"][disabled] {
+    cursor: not-allowed;
+    background-color: #444;
+}
+
+input[type="checkbox"]:not([disabled]):hover {
     border-color: #66d9ef;
 }
 
 input[type="checkbox"]:checked {
     background-color: #f0f0f0;
+}
+
+input[type="checkbox"][disabled] {
+    background-color: #444;
 }
 
 input[type="checkbox"]::after {
