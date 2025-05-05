@@ -44,16 +44,18 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
             },
         });
 
-        const messages = [
+        const prompt = e.data?.text || '';
+
+        const messages = e.data.chat_template ? [
             {
                 role: 'system',
                 content: Config.defaults.system_role,
             },
             {
                 role: 'user',
-                content: e.data?.text || '',
+                content: prompt,
             },
-        ];
+        ] : `Your role: ${Config.defaults.system_role}\nPrompt: ${prompt}`;
 
         await generator(messages, {
             ...e.data.parameters,

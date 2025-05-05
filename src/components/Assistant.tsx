@@ -13,6 +13,7 @@ import Progress from './utils/Progress';
 import Worker from '../model/Worker?worker';
 import Config from '../model/Config.json';
 import type { Input } from '../types/Type';
+import { ModelOutput } from '@huggingface/transformers';
 
 interface Data {
     status: string;
@@ -29,6 +30,7 @@ const Assistant: FunctionComponent = () => {
 
     const [input, setInput] = useState<Input>({
         text: Config.defaults.prompt,
+        chat_template: Config.defaults.chat_template,
         model: Config.defaults.model,
         task: Config.defaults.task,
         device: Config.defaults.device,
@@ -165,8 +167,6 @@ const Assistant: FunctionComponent = () => {
                         defaultItem={Config.defaults.model}
                         onChange={e => setInput({ ...input, model: e.target.value })}
                     />
-                </div>
-                <div className='control-container'>
                     <Selector
                         disabled={status.modelDisabled}
                         title="Device"
@@ -174,6 +174,15 @@ const Assistant: FunctionComponent = () => {
                         items={Config.devices}
                         defaultItem={Config.defaults.device}
                         onChange={e => setInput({ ...input, device: e.target.value })}
+                    />
+                </div>
+                <div className='control-container'>
+                <Check
+                        disabled={status.disabled}
+                        title="Chat template"
+                        tooltip="Using a structured prompt format which includes system role instructions to guides the model's behavior, tone, and response style. May not work for models didn't trained as instruct (it) or chat motels."
+                        checked={input.chat_template}
+                        onChange={e => setInput({ ...input, chat_template: !input.chat_template })}
                     />
                     <Selector
                         disabled={status.modelDisabled}
@@ -265,7 +274,7 @@ const Assistant: FunctionComponent = () => {
                 </div>
             </div>
 
-            <button disabled={status.disabled} onClick={generate}>
+            <button disabled={status.disabled && !status.error} onClick={generate}>
                 {status.error ? 'Refresh' : (status.disabled ? (status.ready ? 'Generating...' : 'Waiting...') : (status.ready ? 'Generate' : 'Download and Generate'))}
             </button>
 

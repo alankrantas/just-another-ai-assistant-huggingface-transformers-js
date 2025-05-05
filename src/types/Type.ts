@@ -1,5 +1,6 @@
 export interface Input {
     text: string;
+    chat_template: boolean;
     model: string;
     task: string;
     device: string;

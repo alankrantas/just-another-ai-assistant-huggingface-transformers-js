@@ -2,32 +2,35 @@
     "models": {
         "SmolLM2-135M-Instruct": "HuggingFaceTB/SmolLM2-135M-Instruct",
         "SmolLM2-360M-Instruct": "HuggingFaceTB/SmolLM2-360M-Instruct",
-        "OpenELM-270M-Instruct": "Xenova/OpenELM-270M-Instruct",
         "Qwen2.5-0.5B-Instruct": "Mozilla/Qwen2.5-0.5B-Instruct",
         "Qwen3-0.6B": "onnx-community/Qwen3-0.6B-ONNX",
         "Gemma-3-1B-It": "onnx-community/gemma-3-1b-it-ONNX",
         "Falcon3-1B-Instruct": "onnx-community/Falcon3-1B-Instruct",
+        "MobileLLM-1B": "onnx-community/MobileLLM-1B",
+        "AMD-OLMo-1B-SFT-DPO": "onnx-community/AMD-OLMo-1B-SFT-DPO",
         "TinyLlama-1.1B-Chat": "Xenova/TinyLlama-1.1B-Chat-v1.0",
+        "ZR1-1.5B": "onnx-community/ZR1-1.5B-ONNX",
         "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct",
         "Phi-3.5-mini-Instruct": "onnx-community/Phi-3.5-mini-instruct-onnx-web"
     },
     "devices": {
         "Auto": "auto",
         "WebAssembly": "wasm",
-        "WebGPU": "webgpu"
+        "Web GPU": "webgpu"
     },
     "dtypes": {
         "Auto": "auto",
-        "float32": "fp32",
-        "float16": "fp16",
-        "int8": "int8",
-        "uint8": "uint8",
-        "q4": "q4",
-        "bnb4": "bnb4",
-        "q4f16": "q4f16"
+        "fp32 (32-blit floating-point)": "fp32",
+        "fp16 (16-bit floating-point)": "fp16",
+        "int8 (8-bit integer)": "int8",
+        "uint8 (8-bit unsigned integer)": "uint8",
+        "q4 (4-bit quantization)": "q4",
+        "bnb4 (4-bit quantization with BitsAndBytes)": "bnb4",
+        "q4f16 (4-bit quantization/16-bit floating-point hybrid)": "q4f16"
     },
     "defaults": {
         "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+        "chat_template": true,
         "task": "text-generation",
         "device": "wasm",
         "dtype": "auto",
