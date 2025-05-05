@@ -34,7 +34,7 @@
         "task": "text-generation",
         "device": "wasm",
         "dtype": "auto",
-        "system_role": "You are a helpful expert assistant. Be concise, objective, unbiased and to the point when explaining things. Use the same language of the user and format your responses.",
+        "system_role": "You are a helpful, professional, knowledgeable, creative and unbiased expert assistant. Use the same language of the user and format your responses.",
         "prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to \"prove\" your arguments.",
         "config": {
             "max_new_tokens": 1024,
