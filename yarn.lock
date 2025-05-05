@@ -295,17 +295,17 @@
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.25.2.tgz#839f72c2decd378f86b8f525e1979a97b920c67d"
   integrity sha512-kM3HKb16VIXZyIeVrM1ygYmZBKybX8N4p754bw390wGO3Tf2j4L2/WYL+4suWujpgf6GBYs3jv7TyUivdd05JA==
 
-"@huggingface/jinja@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@huggingface/jinja/-/jinja-0.3.4.tgz#3d468332129ccf9e8573e7ee432a90ac49a17366"
-  integrity sha512-kFFQWJiWwvxezKQnvH1X7GjsECcMljFx+UZK9hx6P26aVHwwidJVTB0ptLfRVZQvVkOGHoMmTGvo4nT0X9hHOA==
+"@huggingface/jinja@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@huggingface/jinja/-/jinja-0.4.1.tgz#a71deab443c4badb6498d28e784ea1cd5eb369e2"
+  integrity sha512-3WXbMFaPkk03LRCM0z0sylmn8ddDm4ubjU7X+Hg4M2GOuMklwoGAFXp9V2keq7vltoB/c7McE5aHUVVddAewsw==
 
-"@huggingface/transformers@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@huggingface/transformers/-/transformers-3.5.0.tgz#faaf194efa4b57a5aedb7eb585a2c0635e6db461"
-  integrity sha512-/KE7pb22NIJw30gjA56MKuvOI7KgipfcP2n1PSmNKfxXnaBE6T75JUVYWAExp1UNmrwaMm20yzDhSgoCk2NL7w==
+"@huggingface/transformers@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@huggingface/transformers/-/transformers-3.5.1.tgz#8022b616ed8f1ec88d8e56def06d5b0ef5c7a1ee"
+  integrity sha512-qWsPoJMBPYcrGuzRMVL//3dwcLXED9r+j+Hzw+hZpBfrMPdyq57ehNs7lew0D34Paj0DO0E0kZQjOZcIVN17hQ==
   dependencies:
-    "@huggingface/jinja" "^0.3.4"
+    "@huggingface/jinja" "^0.4.1"
     onnxruntime-node "1.21.0"
     onnxruntime-web "1.22.0-dev.20250409-89f8206ba4"
     sharp "^0.34.1"
