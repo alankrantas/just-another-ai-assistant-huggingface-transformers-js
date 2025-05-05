@@ -4,7 +4,7 @@
         "SmolLM2-360M-Instruct": "HuggingFaceTB/SmolLM2-360M-Instruct",
         "OpenELM-270M-Instruct": "Xenova/OpenELM-270M-Instruct",
         "Qwen2.5-0.5B-Instruct": "Mozilla/Qwen2.5-0.5B-Instruct",
-        "Qwen2.5-1.5B-Instruct": "onnx-community/Qwen2.5-1.5B-Instruct",
+        "Qwen3-0.6B": "onnx-community/Qwen3-0.6B-ONNX",
         "Gemma-3-1B-It": "onnx-community/gemma-3-1b-it-ONNX",
         "Falcon3-1B-Instruct": "onnx-community/Falcon3-1B-Instruct",
         "TinyLlama-1.1B-Chat": "Xenova/TinyLlama-1.1B-Chat-v1.0",
@@ -13,14 +13,25 @@
     },
     "devices": {
         "Auto": "auto",
-        "WASM": "wasm",
+        "WebAssembly": "wasm",
         "WebGPU": "webgpu"
+    },
+    "dtypes": {
+        "Auto": "auto",
+        "float32": "fp32",
+        "float16": "fp16",
+        "int8": "int8",
+        "uint8": "uint8",
+        "q4": "q4",
+        "bnb4": "bnb4",
+        "q4f16": "q4f16"
     },
     "defaults": {
         "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
         "task": "text-generation",
         "device": "wasm",
-        "system_role": "You are a helpful, honest, objective, unbiased professional expert assistant. Be concise and to the point. Use the same language of the user and format your responses.",
+        "dtype": "auto",
+        "system_role": "You are a helpful expert assistant. Be concise, objective, unbiased and to the point when explaining things. Use the same language of the user and format your responses.",
         "prompt": "Explain the potential risk of confirmation bias and echo chamber effect while using generative AI to \"prove\" your arguments.",
         "config": {
             "max_new_tokens": 1024,

@@ -6,10 +6,10 @@ import {
 } from 'react';
 
 import './Assistant.css';
-import Selector from './Selector';
-import Range from './Range';
-import Check from './Check';
-import Progress from './Progress';
+import Selector from './utils/Selector';
+import Range from './utils/Range';
+import Check from './utils/Check';
+import Progress from './utils/Progress';
 import Worker from '../model/Worker?worker';
 import Config from '../model/Config.json';
 import type { Input } from '../types/Type';
@@ -32,6 +32,7 @@ const Assistant: FunctionComponent = () => {
         model: Config.defaults.model,
         task: Config.defaults.task,
         device: Config.defaults.device,
+        dtype: Config.defaults.dtype,
         parameters: {
             max_new_tokens: Config.defaults.config.max_new_tokens,
             temperature: Config.defaults.config.temperature,
@@ -123,7 +124,7 @@ const Assistant: FunctionComponent = () => {
                     setStatus({
                         ...status,
                         disabled: false,
-                        statusText: 'Task completed',
+                        statusText: `Task completed (${new Date().toLocaleString("en-us")})`,
                     })
                     console.log(output);
                     break;
@@ -132,9 +133,8 @@ const Assistant: FunctionComponent = () => {
                     setProgressItems([]);
                     setStatus({
                         ...status,
-                        disabled: false,
                         error: true,
-                        statusText: `${status.ready ? 'Model error' : 'Download error'} (refresh to switch model)`,
+                        statusText: `${status.ready ? 'Model error' : 'Download error'} (${new Date().toLocaleString("en-us")})`,
                     })
                     setOutput(e.data?.output || 'Unknown error');
                     break;
@@ -165,6 +165,8 @@ const Assistant: FunctionComponent = () => {
                         defaultItem={Config.defaults.model}
                         onChange={e => setInput({ ...input, model: e.target.value })}
                     />
+                </div>
+                <div className='control-container'>
                     <Selector
                         disabled={status.modelDisabled}
                         title="Device"
@@ -172,6 +174,14 @@ const Assistant: FunctionComponent = () => {
                         items={Config.devices}
                         defaultItem={Config.defaults.device}
                         onChange={e => setInput({ ...input, device: e.target.value })}
+                    />
+                    <Selector
+                        disabled={status.modelDisabled}
+                        title="Data type"
+                        tooltip="Implementations specifies the data type used for computations and memory storage. Choosing the right dtype affects model performance, precision, and efficiency—lower precision types can speed up inference and reduce memory usage at the cost of numerical accuracy."
+                        items={Config.dtypes}
+                        defaultItem={Config.defaults.dtype}
+                        onChange={e => setInput({ ...input, dtype: e.target.value })}
                     />
                 </div>
                 <div className='control-container'>

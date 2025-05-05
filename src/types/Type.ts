@@ -3,6 +3,7 @@ export interface Input {
     model: string;
     task: string;
     device: string;
+    dtype: string;
     parameters: {
         max_new_tokens: number;
         temperature: number;

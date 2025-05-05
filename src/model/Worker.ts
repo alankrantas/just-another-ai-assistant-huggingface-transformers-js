@@ -14,7 +14,7 @@ class ModelPipeline {
 
         const options: any = {
             device: input.device,
-            dtype: 'auto',
+            dtype: input.dtype,
             progress_callback
         };
 
