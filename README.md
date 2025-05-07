@@ -10,7 +10,7 @@ The demo utilizes [`Transformers.js`](https://huggingface.co/docs/transformers.j
 
 ---
 
-## "Small" Large Language Model and Configuration
+## "Small" Large Language Models and Configuration
 
 You can define the [models](https://huggingface.co/models?pipeline_tag=text-generation&library=transformers.js&sort=trending), [tasks](https://huggingface.co/docs/transformers.js/main/en/index#tasks), [device](https://github.com/huggingface/transformers.js/blob/main/src/utils/devices.js) and model parameters in `/src/model/Config.json`:
 
@@ -51,22 +51,7 @@ You can define the [models](https://huggingface.co/models?pipeline_tag=text-gene
 }
 ```
 
-[dtype](https://github.com/huggingface/transformers.js/blob/main/src/utils/dtypes.js) is set to `auto`. I only included models that work here, but some may not work on WASM or WebGPU on your machine.
-
-A "chat template" will be used for instruct models, which may also not supported by some other models:
-
-```js
-[
-    {
-        role: 'system',
-        content: system_role,
-    },
-    {
-        role: 'user',
-        content: user_prompt,
-    },
-]
-```
+The models, devices, data types and some configuration options are available to be selected on the applcation, although you'll have to refresh the page to choose a different model, since trying to load two models into the memory would be problematic, and there are no other way to force garbage collection.
 
 ---
 
