@@ -53,13 +53,11 @@ const Assistant: FunctionComponent = () => {
         ready: false,
         disabled: false,
         modelDisabled: false,
-        error: false,
         statusText: '',
     })
     const [progressItems, setProgressItems] = useState<Data[]>([]);
 
     const generate = () => {
-        if (status.error) window.location.reload();
         if (!input.text) {
             alert('Please provide some prompt for the model!');
             return;
@@ -139,7 +137,7 @@ const Assistant: FunctionComponent = () => {
                     setProgressItems([]);
                     setStatus({
                         ...status,
-                        error: true,
+                        disabled: false,
                         statusText: `${status.ready ? 'Model error' : 'Download error'} (${new Date().toLocaleString("en-us")})`,
                     })
                     setOutput(e.data?.output || 'Unknown error');
@@ -279,8 +277,8 @@ const Assistant: FunctionComponent = () => {
                 </div>
             </div>
 
-            <button disabled={status.disabled && !status.error} onClick={generate}>
-                {status.error ? 'Refresh' : (status.disabled ? (status.ready ? 'Generating...' : 'Waiting...') : (status.ready ? 'Generate' : 'Download and Generate'))}
+            <button disabled={status.disabled} onClick={generate}>
+                {status.disabled ? (status.ready ? 'Generating...' : 'Waiting...') : (status.ready ? 'Generate' : 'Download and Generate')}
             </button>
 
             <div className='progress-bars-container'>

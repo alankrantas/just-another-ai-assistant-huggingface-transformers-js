@@ -63,7 +63,7 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
 
         const prompt = input.text || '';
 
-        const message = input.system_role && input.system_role != "none" ? [
+        const message = input.system_role ? [
             {
                 role: 'system',
                 content: input.system_role,
