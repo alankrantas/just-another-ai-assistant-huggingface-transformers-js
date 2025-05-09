@@ -35,8 +35,7 @@ Notes:
         "AMD-OLMo-1B-SFT-DPO": "onnx-community/AMD-OLMo-1B-SFT-DPO",
         "TinyLlama-1.1B-Chat": "Xenova/TinyLlama-1.1B-Chat-v1.0",
         "ZR1-1.5B": "onnx-community/ZR1-1.5B-ONNX",
-        "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct",
-        "Phi-3.5-mini-Instruct": "onnx-community/Phi-3.5-mini-instruct-onnx-web"
+        "Phi-3-mini-4k-Instruct": "Xenova/Phi-3-mini-4k-instruct"
     },
     "system_roles": {
         "None (no chat template)": "none",
