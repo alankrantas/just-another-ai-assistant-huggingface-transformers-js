@@ -16,7 +16,8 @@
     "devices": {
         "Auto": "auto",
         "WebAssembly": "wasm",
-        "Web GPU": "webgpu"
+        "Web GPU": "webgpu",
+        "WebNN": "webnn"
     },
     "dtypes": {
         "Auto": "auto",
@@ -30,7 +31,7 @@
     },
     "defaults": {
         "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
-        "chat_template": true,
+        "chat_template": false,
         "task": "text-generation",
         "device": "wasm",
         "dtype": "auto",
