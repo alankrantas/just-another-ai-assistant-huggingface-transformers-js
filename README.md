@@ -19,7 +19,7 @@ Notes:
 * The model loading time and memory usage mostly depends on model size. It is recommended to have at least 4-8 GB free memory on your device.
 * System roles may not work well on certain models.
 * Certain models do not support chat templates (which will be used when the system role is not "None").
-* Certain devices and dtype options may not work for certain models.
+* Certain devices and dtype options may not work for certain models. "Audo" in dtype does not work for all models either.
 * After loading a model, you must refresh the page to load a different one. There is no way to release the old model from the memory, and trying to load more than two models proved to be problematic.
 
 ```json
