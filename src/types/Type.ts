@@ -1,7 +1,7 @@
 export interface Input {
     text: string;
-    chat_template: boolean;
     model: string;
+    system_role: string;
     task: string;
     device: string;
     dtype: string;

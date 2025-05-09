@@ -9,7 +9,7 @@
     margin: 25px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .control-container {
@@ -25,8 +25,7 @@
 .range {
     display: flex;
     align-items: center;
-    /* vertically align input with label */
-    gap: 8px;
+    gap: 10px;
 }
 
 .range>input[type="range"] {
@@ -39,7 +38,7 @@
 .check {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .check>input[type="checkbox"] {

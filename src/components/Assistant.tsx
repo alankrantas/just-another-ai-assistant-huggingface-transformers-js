@@ -13,7 +13,6 @@ import Progress from './utils/Progress';
 import Worker from '../model/Worker?worker';
 import Config from '../model/Config.json';
 import type { Input } from '../types/Type';
-import { ModelOutput } from '@huggingface/transformers';
 
 interface Data {
     status: string;
@@ -23,6 +22,11 @@ interface Data {
     output?: string;
 }
 
+const getByKey = (items: {[key: string]: string}, key: string) => {
+    console.log(items[key])
+    return items[key];
+}
+
 const Assistant: FunctionComponent = () => {
 
     const worker = useRef<Worker | null>(null);
@@ -30,11 +34,11 @@ const Assistant: FunctionComponent = () => {
 
     const [input, setInput] = useState<Input>({
         text: Config.defaults.prompt,
-        chat_template: Config.defaults.chat_template,
-        model: Config.defaults.model,
+        model: getByKey(Config.models,Config.defaults.model),
         task: Config.defaults.task,
-        device: Config.defaults.device,
-        dtype: Config.defaults.dtype,
+        system_role: getByKey(Config.system_roles, Config.defaults.system_role),
+        device: getByKey(Config.devices, Config.defaults.device),
+        dtype: getByKey(Config.dtypes, Config.defaults.dtype),
         parameters: {
             max_new_tokens: Config.defaults.config.max_new_tokens,
             temperature: Config.defaults.config.temperature,
@@ -164,7 +168,7 @@ const Assistant: FunctionComponent = () => {
                         title="Model"
                         tooltip="Larger models with more parameters (e.g., B for billion and M for million) typically offer better performance by capturing complex patterns but require more memory and are slower in generating responses. Smaller models, on the other hand, are faster and more efficient but may compromise accuracy or depth in understanding."
                         items={Config.models}
-                        defaultItem={Config.defaults.model}
+                        defaultItem={getByKey(Config.models,Config.defaults.model)}
                         onChange={e => setInput({ ...input, model: e.target.value })}
                     />
                     <Selector
@@ -172,24 +176,25 @@ const Assistant: FunctionComponent = () => {
                         title="Device"
                         tooltip="Some models are optimized for WASM and/or WebGPU due to their compatibility with the required APIs or hardware acceleration, allowing efficient execution on supported devices. Some models may be less efficient or incompatible on some platforms."
                         items={Config.devices}
-                        defaultItem={Config.defaults.device}
+                        defaultItem={getByKey(Config.devices, Config.defaults.device)}
                         onChange={e => setInput({ ...input, device: e.target.value })}
                     />
                 </div>
                 <div className='control-container'>
-                <Check
+                    <Selector
                         disabled={status.disabled}
-                        title="Chat template"
-                        tooltip="Using a structured prompt format which includes system role instructions to guides the model's behavior, tone, and response style. May not work for models didn't trained as instruct (it) or chat motels."
-                        checked={input.chat_template}
-                        onChange={e => setInput({ ...input, chat_template: !input.chat_template })}
+                        title="System role"
+                        tooltip="The system role in a chat template sets the behavior, tone, and boundaries for the assistant throughout the conversation. It acts as an initial instruction to guide how the model should interpret and respond to the user's prompts."
+                        items={Config.system_roles}
+                        defaultItem={getByKey(Config.system_roles, Config.defaults.system_role)}
+                        onChange={e => setInput({ ...input, system_role: e.target.value })}
                     />
                     <Selector
                         disabled={status.modelDisabled}
                         title="Data type"
                         tooltip="Implementations specifies the data type used for computations and memory storage. Choosing the right dtype affects model performance, precision, and efficiency—lower precision types can speed up inference and reduce memory usage at the cost of numerical accuracy."
                         items={Config.dtypes}
-                        defaultItem={Config.defaults.dtype}
+                        defaultItem={getByKey(Config.dtypes, Config.defaults.dtype)}
                         onChange={e => setInput({ ...input, dtype: e.target.value })}
                     />
                 </div>

@@ -1,36 +1,53 @@
 import { env, pipeline, TextStreamer } from '@huggingface/transformers';
 import type { PipelineType, Pipeline, ProgressCallback } from '@huggingface/transformers';
 
-import Config from './Config.json';
 import type { Input } from '../types/Type';
+
+interface ModelParameters {
+    model: string;
+    task: string;
+    device: string;
+    dtype: string;
+    progress_callback: ProgressCallback;
+}
 
 class ModelPipeline {
     static instance: Promise<Pipeline> | undefined;
 
-    static async getInstance(input: Input, progress_callback?: ProgressCallback) {
+    static async getInstance(parameters: ModelParameters) {
         env.allowRemoteModels = true;
         env.allowLocalModels = false;
         env.useBrowserCache = false;
 
         const options: any = {
-            device: input.device,
-            dtype: input.dtype,
-            progress_callback
+            device: parameters.device,
+            dtype: parameters.dtype,
+            progress_callback: parameters.progress_callback,
         };
 
-        this.instance ??= pipeline<PipelineType>(input.task as PipelineType, input.model, options) as Promise<Pipeline>;
+        this.instance ??= pipeline<PipelineType>(
+            parameters.task as PipelineType,
+            parameters.model,
+            options,
+        ) as Promise<Pipeline>;
 
         return this.instance;
     }
 }
 
 self.addEventListener('message', async (e: MessageEvent<Input>) => {
-    console.log(e.data);
+    const input = e.data;
+    console.log(input);
 
     try {
         const generator = await ModelPipeline.getInstance(
-            e.data,
-            (x) => { self.postMessage(x) }
+            {
+                model: input.model,
+                task: input.task,
+                device: input.device,
+                dtype: input.dtype,
+                progress_callback: (x) => { self.postMessage(x) },
+            }
         );
 
         const streamer = new TextStreamer(generator.tokenizer, {
@@ -44,21 +61,23 @@ self.addEventListener('message', async (e: MessageEvent<Input>) => {
             },
         });
 
-        const prompt = e.data?.text || '';
+        const prompt = input.text || '';
 
-        const messages = e.data.chat_template ? [
+        const message = input.system_role && input.system_role != "none" ? [
             {
                 role: 'system',
-                content: Config.defaults.system_role,
+                content: input.system_role,
             },
             {
                 role: 'user',
                 content: prompt,
             },
-        ] : `Your role: ${Config.defaults.system_role}\nPrompt: ${prompt}`;
+        ] : prompt;
 
-        await generator(messages, {
-            ...e.data.parameters,
+        console.log(message);
+
+        await generator(message, {
+            ...input.parameters,
             return_full_text: false,
             streamer,
         });
