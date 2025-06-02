@@ -300,10 +300,10 @@
   resolved "https://registry.yarnpkg.com/@huggingface/jinja/-/jinja-0.4.1.tgz#a71deab443c4badb6498d28e784ea1cd5eb369e2"
   integrity sha512-3WXbMFaPkk03LRCM0z0sylmn8ddDm4ubjU7X+Hg4M2GOuMklwoGAFXp9V2keq7vltoB/c7McE5aHUVVddAewsw==
 
-"@huggingface/transformers@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@huggingface/transformers/-/transformers-3.5.1.tgz#8022b616ed8f1ec88d8e56def06d5b0ef5c7a1ee"
-  integrity sha512-qWsPoJMBPYcrGuzRMVL//3dwcLXED9r+j+Hzw+hZpBfrMPdyq57ehNs7lew0D34Paj0DO0E0kZQjOZcIVN17hQ==
+"@huggingface/transformers@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@huggingface/transformers/-/transformers-3.5.2.tgz#2426949c594e362f81801c04d48908d4bea69663"
+  integrity sha512-mfRXkmcL99+ibpjM++pvZmc2h3po8i1ZgSRI5Rtgh++P15GU0lY8UQteYt/w5V+GQw+Jpao93MoipcePzh3mKg==
   dependencies:
     "@huggingface/jinja" "^0.4.1"
     onnxruntime-node "1.21.0"
