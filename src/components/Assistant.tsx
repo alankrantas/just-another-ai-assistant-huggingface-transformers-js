@@ -157,7 +157,7 @@ const Assistant: FunctionComponent = () => {
                 HuggingFace Transformers.js Demo
                 (<a href='https://github.com/alankrantas/just-another-ai-assistant-huggingface-transformers-js' target='_blank' rel='noreferrer noopener'>repo</a>)
             </h2>
-            <h4>Note: This does not work on mobile devices due to memory limitations.</h4>
+            <h4>Note: this may not work on mobile devices due to memory limitations,<br />and may trigger bandwidth usage warning in company networks.</h4>
 
             <div className='container'>
                 <div className='control-container'>
