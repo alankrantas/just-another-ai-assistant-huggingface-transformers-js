@@ -20,7 +20,7 @@ Notes:
 * System roles may not work well on certain models.
 * Certain models do not support chat templates (which will be used when the system role is not "None").
 * Certain devices and dtype options may not work for certain models. "Audo" in dtype does not work for all models either.
-    * For example, `Gemma-3-1B-It` does not work on WebGPU, and `SmolLM2-1.7B-Instruct` only works when dtype is set to `int8`, `uint8`, `bnb4` or `q4f16`.
+    * For example, `Gemma-3-1B-It` does not work on WebGPU, and `SmolLM2-1.7B-Instruct` only works for dtype = `int8`, `uint8`, `bnb4` or `q4f16`.
 * After loading a model, you must refresh the page to load a different one. There is no way to release the old model from the memory, and trying to load more than two models proved to be problematic.
 
 ```json
@@ -28,13 +28,10 @@ Notes:
     "models": {
         "SmolLM2-135M-Instruct": "HuggingFaceTB/SmolLM2-135M-Instruct",
         "SmolLM2-360M-Instruct": "HuggingFaceTB/SmolLM2-360M-Instruct",
-        "codegen-350M-mono": "Xenova/codegen-350M-mono",
         "Qwen2.5-0.5B-Instruct": "Mozilla/Qwen2.5-0.5B-Instruct",
         "Qwen3-0.6B": "onnx-community/Qwen3-0.6B-ONNX",
         "Gemma-3-1B-It": "onnx-community/gemma-3-1b-it-ONNX",
         "Falcon3-1B-Instruct": "onnx-community/Falcon3-1B-Instruct",
-        "AMD-OLMo-1B-SFT-DPO": "onnx-community/AMD-OLMo-1B-SFT-DPO",
-        "ZR1-1.5B": "onnx-community/ZR1-1.5B-ONNX",
         "SmolLM2-1.7B-Instruct": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
         "Phi-3-mini-4k-Instruct (3.8B)": "Xenova/Phi-3-mini-4k-instruct"
     },
