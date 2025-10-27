@@ -14,7 +14,7 @@
         "commit": "yarn pull && yarn push"
     },
     "dependencies": {
-        "@huggingface/transformers": "^3.7.5",
+        "@huggingface/transformers": "^3.7.6",
         "react": "^19.2.0",
         "react-dom": "19.2.0"
     },
